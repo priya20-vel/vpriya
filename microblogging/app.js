@@ -1,11 +1,10 @@
-
 let currentUser = null;
 
 // Load posts from localStorage
 function loadPosts() {
     const posts = JSON.parse(localStorage.getItem('posts')) || [];
     posts.forEach(post => {
-        createPost(post.content, post.likes, post.dislikes, post.comments, post.author);
+        createPost(post.content, post.likes, post.dislikes, post.comments);
     });
     document.getElementById('count').innerText = posts.length;
 }
@@ -31,7 +30,7 @@ document.getElementById('post-btn').addEventListener('click', () => {
     const postContent = postInput.value.trim();
 
     if (postContent) {
-        createPost(postContent, 0, 0, [], currentUser); // Pass currentUser as author
+        createPost(postContent);
         postInput.value = '';
         updatePostCount();
     } else {
@@ -40,20 +39,15 @@ document.getElementById('post-btn').addEventListener('click', () => {
 });
 
 // Create a post
-function createPost(content, likes = 0, dislikes = 0, comments = [], author) {
+function createPost(content, likes = 0, dislikes = 0, comments = []) {
     const postContainer = document.getElementById('posts-container');
-
+   
     const postDiv = document.createElement('div');
     postDiv.className = 'post';
 
     const postText = document.createElement('p');
     postText.innerText = content;
     postDiv.appendChild(postText);
-
-    // Display the author of the post
-    const authorText = document.createElement('small');
-    authorText.innerText = `Posted by: ${author}`;
-    postDiv.appendChild(authorText);
 
     const reactionsDiv = document.createElement('div');
     reactionsDiv.className = 'reactions';
@@ -76,7 +70,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = [], author) {
 
     reactionsDiv.appendChild(likeButton);
     reactionsDiv.appendChild(dislikeButton);
-
+   
     const commentSection = document.createElement('div');
     commentSection.className = 'comments';
     const commentCount = document.createElement('p');
@@ -90,13 +84,13 @@ function createPost(content, likes = 0, dislikes = 0, comments = [], author) {
     commentInput.className = 'comment-input';
 
     const commentButton = document.createElement('button');
-    commentButton.innerHTML = '💬'; // Comment emoji
+    commentButton.innerText = 'Comment';
     commentButton.addEventListener('click', () => {
         const commentText = commentInput.value.trim();
         if (commentText) {
             const comment = document.createElement('p');
             comment.className = 'comment';
-            comment.innerHTML = `💬 ${commentText}`; // Show only the comment text
+            comment.innerHTML = `👤 ${currentUser}: ${commentText}`;
             commentSection.appendChild(comment);
             comments.push(commentText);
             commentCount.innerText = `Comments: ${comments.length}`;
@@ -105,17 +99,9 @@ function createPost(content, likes = 0, dislikes = 0, comments = [], author) {
         }
     });
 
-    // Load existing comments
-    comments.forEach(commentText => {
-        const comment = document.createElement('p');
-        comment.className = 'comment';
-        comment.innerHTML = `💬 ${commentText}`; // Show only the comment text
-        commentSection.appendChild(comment);
-    });
-
     commentSection.appendChild(commentInput);
     commentSection.appendChild(commentButton);
-
+   
     postDiv.appendChild(reactionsDiv);
     postDiv.appendChild(commentSection);
     postContainer.prepend(postDiv);
@@ -133,9 +119,8 @@ function updateLocalStorage() {
         const likes = postElement.querySelector('.like-count').innerText;
         const dislikes = postElement.querySelector('.dislike-count').innerText;
         const comments = Array.from(postElement.querySelectorAll('.comments .comment')).map(comment => comment.innerText);
-        const author = postElement.querySelector('small').innerText.replace('Posted by: ', ''); // Extract author name
 
-        posts.push({ content, likes: parseInt(likes), dislikes: parseInt(dislikes), comments, author });
+        posts.push({ content, likes: parseInt(likes), dislikes: parseInt(dislikes), comments });
     });
 
     localStorage.setItem('posts', JSON.stringify(posts));
@@ -146,3 +131,5 @@ function updatePostCount() {
     const postCount = document.querySelectorAll('.post').length;
     document.getElementById('count').innerText = postCount;
 }
+
+
