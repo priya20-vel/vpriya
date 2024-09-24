@@ -1,5 +1,4 @@
 
-
 let currentUser = null;
 
 // Load posts from localStorage
@@ -101,6 +100,14 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
         }
     });
 
+    // Load existing comments
+    comments.forEach(commentText => {
+        const comment = document.createElement('p');
+        comment.className = 'comment';
+        comment.innerHTML = `👤 ${currentUser}: ${commentText}`;
+        commentSection.appendChild(comment);
+    });
+
     commentSection.appendChild(commentInput);
     commentSection.appendChild(commentButton);
    
@@ -133,3 +140,6 @@ function updatePostCount() {
     const postCount = document.querySelectorAll('.post').length;
     document.getElementById('count').innerText = postCount;
 }
+
+
+
