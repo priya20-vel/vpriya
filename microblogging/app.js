@@ -90,7 +90,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
         if (commentText) {
             const comment = document.createElement('p');
             comment.className = 'comment';
-            comment.innerHTML = `👤 ${currentUser}: ${commentText}`;
+            comment.innerHTML = `👤 ${commentText}`; 
             commentSection.appendChild(comment);
             comments.push(commentText);
             commentCount.innerText = `Comments: ${comments.length}`;
