@@ -53,7 +53,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
     reactionsDiv.className = 'reactions';
 
     const likeButton = document.createElement('button');
-    likeButton.innerHTML = `👍 <span class="like-count">${likes}</span>`;
+    likeButton.innerHTML = 👍 <span class="like-count">${likes}</span>;
     likeButton.addEventListener('click', () => {
         likes++;
         likeButton.querySelector('.like-count').innerText = likes;
@@ -61,7 +61,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
     });
 
     const dislikeButton = document.createElement('button');
-    dislikeButton.innerHTML = `👎 <span class="dislike-count">${dislikes}</span>`;
+    dislikeButton.innerHTML = 👎 <span class="dislike-count">${dislikes}</span>;
     dislikeButton.addEventListener('click', () => {
         dislikes++;
         dislikeButton.querySelector('.dislike-count').innerText = dislikes;
@@ -75,7 +75,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
     commentSection.className = 'comments';
     const commentCount = document.createElement('p');
     commentCount.className = 'comment-count';
-    commentCount.innerText = `Comments: ${comments.length}`;
+    commentCount.innerText = Comments: ${comments.length};
     commentSection.appendChild(commentCount);
 
     const commentInput = document.createElement('input');
@@ -90,10 +90,10 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
         if (commentText) {
             const comment = document.createElement('p');
             comment.className = 'comment';
-            comment.innerHTML = `👤 ${commentText}`; 
+            comment.innerHTML = 👤 ${currentUser}: ${commentText};
             commentSection.appendChild(comment);
             comments.push(commentText);
-            commentCount.innerText = `Comments: ${comments.length}`;
+            commentCount.innerText = Comments: ${comments.length};
             commentInput.value = '';
             updateLocalStorage();
         }
@@ -130,6 +130,4 @@ function updateLocalStorage() {
 function updatePostCount() {
     const postCount = document.querySelectorAll('.post').length;
     document.getElementById('count').innerText = postCount;
-}
-
-
+} 
