@@ -45,18 +45,18 @@ textarea:focus {
 }
 
 button {
-    background-color:blue;
+    background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    border-radius: 4px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: background 0.3s, transform 0.2s;
 }
 
 button:hover {
-    background-color:red;
+    background-color:#007bff;
     transform: scale(1.05);
 }
 
