@@ -41,11 +41,11 @@ textarea {
 }
 
 textarea:focus {
-    border: 1px solid #00796b;
+    border: 1px solid blue;
 }
 
 button {
-    background-color: #00796b;
+    background-color: blue;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -56,7 +56,7 @@ button {
 }
 
 button:hover {
-    background-color: #004d40;
+    background-color:red;
     transform: scale(1.05);
 }
 
