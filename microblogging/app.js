@@ -1,3 +1,43 @@
+let currentUser = null;
+
+// Load posts from localStorage
+function loadPosts() {
+    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+    posts.forEach(post => {
+        createPost(post.content, post.likes, post.dislikes, post.comments);
+    });
+    document.getElementById('count').innerText = posts.length;
+}
+
+// Login functionality
+document.getElementById('login-btn').addEventListener('click', () => {
+    const usernameInput = document.getElementById('username');
+    currentUser = usernameInput.value.trim();
+
+    if (currentUser) {
+        document.getElementById('user-display').innerText = currentUser;
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('post-section').style.display = 'block';
+        loadPosts(); // Load posts on login
+    } else {
+        alert("Please enter a username");
+    }
+});
+
+// Post functionality
+document.getElementById('post-btn').addEventListener('click', () => {
+    const postInput = document.getElementById('post-input');
+    const postContent = postInput.value.trim();
+
+    if (postContent) {
+        createPost(postContent);
+        postInput.value = '';
+        updatePostCount();
+    } else {
+        alert("Please write something to post");
+    }
+});
+
 // Create a post
 function createPost(content, likes = 0, dislikes = 0, comments = []) {
     const postContainer = document.getElementById('posts-container');
@@ -38,14 +78,6 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
     commentCount.innerText = `Comments: ${comments.length}`;
     commentSection.appendChild(commentCount);
 
-    // Display existing comments
-    comments.forEach(commentText => {
-        const comment = document.createElement('p');
-        comment.className = 'comment';
-        comment.innerHTML = `👤 ${commentText}`; // Display emoji and comment text only
-        commentSection.appendChild(comment);
-    });
-
     const commentInput = document.createElement('input');
     commentInput.type = 'text';
     commentInput.placeholder = 'Add a comment...';
@@ -58,7 +90,7 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
         if (commentText) {
             const comment = document.createElement('p');
             comment.className = 'comment';
-            comment.innerHTML = `👤 ${commentText}`; // Display emoji and comment text only
+            comment.innerHTML = `👤 ${currentUser}: ${commentText}`;
             commentSection.appendChild(comment);
             comments.push(commentText);
             commentCount.innerText = `Comments: ${comments.length}`;
@@ -76,3 +108,27 @@ function createPost(content, likes = 0, dislikes = 0, comments = []) {
 
     updateLocalStorage();
 }
+
+// Update local storage
+function updateLocalStorage() {
+    const posts = [];
+    const postElements = document.querySelectorAll('.post');
+
+    postElements.forEach(postElement => {
+        const content = postElement.querySelector('p').innerText;
+        const likes = postElement.querySelector('.like-count').innerText;
+        const dislikes = postElement.querySelector('.dislike-count').innerText;
+        const comments = Array.from(postElement.querySelectorAll('.comments .comment')).map(comment => comment.innerText);
+
+        posts.push({ content, likes: parseInt(likes), dislikes: parseInt(dislikes), comments });
+    });
+
+    localStorage.setItem('posts', JSON.stringify(posts));
+}
+
+// Update post count
+function updatePostCount() {
+    const postCount = document.querySelectorAll('.post').length;
+    document.getElementById('count').innerText = postCount;
+}
+
