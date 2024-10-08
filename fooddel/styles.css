@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+header {
+    background: #ff6347;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+
+#navbar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+#navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+restaurant {
+    background: #ff6347;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+#restaurant-links {
+    margin-top: 10px;
+}
+
+#restaurant-links button {
+    background-color: #fff;
+    color: #4CAF50;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    
+}
+
+#restaurant-links button:hover {
+    background-color: #e7e7e7;
+    
+
+}
+
+#restaurants {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   
+}
+
+.restaurant {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+.restaurant img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.menu-item {
+    margin-top: 10px;
+}
+
+.menu-item img {
+    max-width: 80%;
+    border-radius: 5px;
+}
+
+.review-section {
+    margin-top: 10px;
+}
+
+.review-section input[type="number"],
+.review-section input[type="text"] {
+    width: calc(50% - 10px);
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.review-section button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.review-section button:hover {
+    background-color: #45a049;
+}
+
+#cart {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+}
+
+#checkoutButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#checkoutButton:hover {
+    background-color: #45a049;
+}
