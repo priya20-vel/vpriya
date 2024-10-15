@@ -35,32 +35,24 @@
         }
 
         li {
-            background-color: #fff;
             margin: 15px 0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
         }
 
-        li:hover {
-            transform: translateY(-5px);
-        }
-
-        li p {
-            margin: 0;
-            font-size: 1.1em;
-        }
-
-        a {
-            color: #007BFF;
+        .button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            text-align: center;
             text-decoration: none;
             font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        a:hover {
-            text-decoration: underline;
-            color: #0056b3;
+        .button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -69,24 +61,16 @@
     <h2>PRIYA V</h2>
     <ol>
         <li>
-            <p>
-            <a href="https://priya20-vel.github.io/vpriya/portfolio/index1.html">PORTFOLIO</a>
-            </p>
+            <a class="button" href="https://priya20-vel.github.io/vpriya/portfolio/index1.html">PORTFOLIO</a>
         </li>
         <li>
-            <p>
-            <a href="https://priya20-vel.github.io/vpriya/todolist/ex2.html">TODOLIST</a>
-            </p>
+            <a class="button" href="https://priya20-vel.github.io/vpriya/todolist/ex2.html">TODOLIST</a>
         </li>
         <li>
-            <p>
-            <a href="https://priya20-vel.github.io/vpriya/microblogging/index.html">MICROBLOGGING</a>
-            </p>
+            <a class="button" href="https://priya20-vel.github.io/vpriya/microblogging/index.html">MICROBLOGGING</a>
         </li>
         <li>
-            <p>
-            <a href="https://priya20-vel.github.io/vpriya/kowshi/index.html">FOOD DELIVERY</a>
-            </p>
+            <a class="button" href="https://priya20-vel.github.io/vpriya/kowshi/index.html">FOOD DELIVERY</a>
         </li>
     </ol>
 </body>
