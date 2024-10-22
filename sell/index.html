@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy and Sell Products</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <h1>Product App</h1>
+        <div class="nav-buttons">
+            <button onclick="showHome()">Home</button>
+            <button onclick="showCart()">Cart</button>
+            <button onclick="showSellProduct()">Sell Product</button>
+            <button onclick="showBuyProduct()">Buy Product</button>
+            <button onclick="showLogin()">Login</button>
+            <button onclick="showRegister()">Register</button>
+            <button onclick="showOrders()">Orders</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="home">
+            <h2>Available Products</h2>
+            <div id="products"></div>
+        </div>
+
+        <div id="buy-product" class="hidden">
+            <h2>Available Products</h2>
+            <div id="buy-products"></div>
+        </div>
+
+        <div id="cart" class="hidden">
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <input type="text" id="delivery-address" placeholder="Delivery Address" required>
+            <input type="text" id="contact-number" placeholder="Contact Number" required>
+            <div>
+                <label>
+                    <input type="radio" name="payment-method" value="cod" checked>
+                    Cash on Delivery
+                </label>
+                <label>
+                    <input type="radio" name="payment-method" value="online">
+                    Online Payment
+                </label>
+                <label>
+                    <input type="radio" name="payment-method" value="upi">
+                    UPI
+                </label>
+            </div>
+            <div id="payment-details" class="hidden">
+                <h3>Payment Details</h3>
+                <div id="upi-details" class="hidden">
+                    <select id="bank-select">
+                        <option value="">Select Bank</option>
+                        <option value="bank1">Bank 1</option>
+                        <option value="bank2">Bank 2</option>
+                        <option value="bank3">Bank 3</option>
+                    </select>
+                    <input type="text" id="upi-number" placeholder="Enter UPI ID" required>
+                </div>
+                <div>
+                    <input type="text" id="card-number" placeholder="Card Number" required>
+                    <input type="text" id="expiry-date" placeholder="Expiry Date (MM/YY)" required>
+                    <input type="text" id="cvv" placeholder="CVV" required>
+                </div>
+            </div>
+            <button onclick="confirmOrder()">Confirm Order</button>
+        </div>
+
+        <div id="sell-product" class="hidden">
+            <h2>Sell a Product</h2>
+            <input type="text" id="product-name" placeholder="Product Name" required>
+            <input type="number" id="product-price" placeholder="Price (INR)" required>
+            <input type="text" id="product-image" placeholder="Image URL" required>
+            <button onclick="addProduct()">Add Product</button>
+            <button onclick="showHome()">Go to Home</button>
+        </div>
+
+        <div id="login" class="hidden">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Username" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="register" class="hidden">
+            <h2>Register</h2>
+            <input type="text" id="register-username" placeholder="Username" required>
+            <input type="password" id="register-password" placeholder="Password" required>
+            <button onclick="register()">Register</button>
+        </div>
+
+        <div id="orders" class="hidden">
+            <h2>Your Orders</h2>
+            <div id="order-list"></div>
+            <div id="return-policy">
+                <h3>Return Policy</h3>
+                <p>Items can be returned within 30 days of receipt for a full refund.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
