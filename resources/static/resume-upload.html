@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Upload - AI Resume Screening</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .upload-section {
+            padding: 60px 0;
+        }
+        
+        .upload-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px dashed #3498db;
+            transition: all 0.3s;
+        }
+        
+        .upload-card:hover {
+            border-color: #2980b9;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .upload-icon {
+            font-size: 4rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .upload-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .upload-description {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .file-input-button {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem;
+        }
+        
+        .file-input-button:hover {
+            background: #2980b9;
+        }
+        
+        .file-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .file-name {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .file-size {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .upload-button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1rem;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .upload-button:hover {
+            background: #2ecc71;
+        }
+        
+        .upload-button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .progress-section {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .progress {
+            height: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            font-weight: bold;
+            line-height: 25px;
+        }
+        
+        .result-section {
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .parsed-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .info-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 3px;
+        }
+        
+        .instructions-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .instruction-icon {
+            color: #3498db;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .instruction-text {
+            color: #2c3e50;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain"></i> AI Resume Screening
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/jobs.html">Jobs</a>
+                <a class="nav-link" href="/resume-shortlist.html">Resume Shortlist</a>
+                <a class="nav-link" href="/#about">About</a>
+            </div>
+            <div class="auth-buttons">
+                <span class="text-white me-3" id="welcomeUser">Welcome!</span>
+                <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Resume Upload</h1>
+            <p class="page-subtitle">Upload your resume for AI-powered analysis and shortlisting</p>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <div class="container">
+            <div class="row">
+                <!-- Instructions -->
+                <div class="col-md-4">
+                    <div class="instructions-section">
+                        <h4><i class="fas fa-info-circle"></i> How to Upload</h4>
+                        
+                        <div class="instruction-item">
+                            <i class="fas fa-file-pdf instruction-icon"></i>
+                            <span class="instruction-text">Upload PDF resume files only</span>
+                        </div>
+                        
+                        <div class="instruction-item">
+                            <i class="fas fa-weight instruction-icon"></i>
+                            <span class="instruction-text">Maximum file size: 5MB</span>
+                        </div>
+                        
+                        <div class="instruction-item">
+                            <i class="fas fa-robot instruction-icon"></i>
+                            <span class="instruction-text">AI will extract skills, experience, education</span>
+                        </div>
+                        
+                        <div class="instruction-item">
+                            <i class="fas fa-star instruction-icon"></i>
+                            <span class="instruction-text">Resume will be scored and ranked</span>
+                        </div>
+                        
+                        <div class="instruction-item">
+                            <i class="fas fa-shield-alt instruction-icon"></i>
+                            <span class="instruction-text">Your data is secure and private</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Card -->
+                <div class="col-md-8">
+                    <div class="upload-card">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3 class="upload-title">Upload Your Resume</h3>
+                        <p class="upload-description">Click the button below to select your resume file (PDF only)</p>
+                        
+                        <div class="file-input-wrapper">
+                            <input type="file" id="resumeFile" class="file-input" accept=".pdf" onchange="handleFileSelect(event)">
+                            <button type="button" class="file-input-button" onclick="document.getElementById('resumeFile').click()">
+                                <i class="fas fa-folder-open"></i> Choose Resume File
+                            </button>
+                        </div>
+                        
+                        <div id="fileInfo" class="file-info">
+                            <div class="file-name" id="fileName"></div>
+                            <div class="file-size" id="fileSize"></div>
+                        </div>
+                        
+                        <button id="uploadButton" class="upload-button" onclick="uploadResume()">
+                            <i class="fas fa-upload"></i> Upload Resume
+                        </button>
+                        
+                        <div id="progressSection" class="progress-section">
+                            <div class="progress">
+                                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%">
+                                    0%
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="loadingSpinner" class="loading-spinner">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Processing...</span>
+                            </div>
+                            <p class="mt-2">Processing your resume...</p>
+                        </div>
+                        
+                        <div id="resultSection" class="result-section">
+                            <!-- Results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let selectedFile = null;
+        let currentUser = null;
+        
+        // Delete resume function
+        function deleteResume(resumeId) {
+            if (!confirm('Are you sure you want to delete your uploaded resume? This action cannot be undone.')) {
+                return;
+            }
+            
+            console.log('=== DEBUG: Deleting Resume ===');
+            console.log('Resume ID to delete:', resumeId);
+            
+            try {
+                // Get current user
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const userId = user.id || 'user_' + Date.now();
+                
+                // Get all resumes from localStorage
+                const allResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+                console.log('Total resumes before deletion:', allResumes.length);
+                
+                // Filter out the resume to delete (only user's own resume)
+                const filteredResumes = allResumes.filter(resume => {
+                    const shouldKeep = !(resume.id === resumeId && resume.userId === userId);
+                    if (!shouldKeep) {
+                        console.log('Deleting resume:', resume.fileName, 'ID:', resume.id);
+                    }
+                    return shouldKeep;
+                });
+                
+                // Update localStorage
+                localStorage.setItem('uploadedResumes', JSON.stringify(filteredResumes));
+                console.log('Total resumes after deletion:', filteredResumes.length);
+                
+                // Show success message
+                showNotification('Resume deleted successfully!', 'success');
+                
+                // Reset upload form
+                resetUpload();
+                
+                console.log('=== END DEBUG: Resume Deleted ===');
+                
+            } catch (error) {
+                console.error('Error deleting resume:', error);
+                showNotification('Error deleting resume. Please try again.', 'error');
+            }
+        }
+        
+        // Show notification function
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Check authentication when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            
+            // Debug: Check existing resumes
+            const existingResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+            console.log('=== DEBUG: Existing Resumes in localStorage ===');
+            console.log('Total resumes found:', existingResumes.length);
+            existingResumes.forEach((resume, index) => {
+                console.log(`Resume ${index + 1}:`, {
+                    id: resume.id,
+                    userId: resume.userId,
+                    userName: resume.userName,
+                    fileName: resume.fileName,
+                    aiScore: resume.aiScore,
+                    isShortlisted: resume.isShortlisted,
+                    isRejected: resume.isRejected,
+                    autoShortlisted: resume.autoShortlisted,
+                    uploadDate: resume.uploadDate
+                });
+            });
+            console.log('=== END DEBUG ===');
+        });
+        
+        // Check authentication state
+        function checkAuthState() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+                document.getElementById('welcomeUser').textContent = `Welcome, ${currentUser.username || 'User'}!`;
+            } else {
+                // Redirect to home page if not logged in
+                window.location.href = '/';
+            }
+        }
+        
+        // Handle file selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Validate file type
+                if (file.type !== 'application/pdf') {
+                    showError('Please select a PDF file only');
+                    event.target.value = '';
+                    return;
+                }
+                
+                // Validate file size (5MB limit)
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('File size must be less than 5MB');
+                    event.target.value = '';
+                    return;
+                }
+                
+                selectedFile = file;
+                
+                // Display file info
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+                document.getElementById('fileInfo').style.display = 'block';
+                document.getElementById('uploadButton').style.display = 'inline-block';
+                
+                // Hide previous results
+                document.getElementById('resultSection').style.display = 'none';
+                document.getElementById('progressSection').style.display = 'none';
+                
+                console.log('File selected:', file.name, 'Size:', formatFileSize(file.size));
+            }
+        }
+        
+        // Format file size
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Upload resume
+        async function uploadResume() {
+            if (!selectedFile) {
+                showError('Please select a file first');
+                return;
+            }
+            
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showError('Please login to upload resume');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 2000);
+                return;
+            }
+            
+            // Check for duplicate resume
+            const existingResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            const userResumes = existingResumes.filter(resume => resume.userId === user.id);
+            
+            if (userResumes.length > 0) {
+                const duplicateCheck = userResumes.some(resume => 
+                    resume.fileName === selectedFile.name && 
+                    resume.fileSize === selectedFile.size
+                );
+                
+                if (duplicateCheck) {
+                    showError('You have already uploaded this resume. Each user can upload only one resume.');
+                    return;
+                }
+                
+                if (userResumes.length >= 1) {
+                    const confirmReplace = confirm('You already have a resume uploaded. Do you want to replace it with this new resume?');
+                    if (!confirmReplace) {
+                        return;
+                    }
+                    
+                    // Remove old resume
+                    const filteredResumes = existingResumes.filter(resume => resume.userId !== user.id);
+                    localStorage.setItem('uploadedResumes', JSON.stringify(filteredResumes));
+                }
+            }
+            
+            console.log('Token found:', token.substring(0, 20) + '...');
+            
+            // Show progress and loading
+            document.getElementById('progressSection').style.display = 'block';
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('uploadButton').disabled = true;
+            
+            // Create form data
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            
+            try {
+                console.log('Uploading resume:', selectedFile.name);
+                
+                // Simulate progress
+                simulateProgress();
+                
+                // Simulate API call with local storage
+                await simulateAPIUpload(formData);
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                showError('Upload failed: ' + error.message);
+            } finally {
+                // Hide loading
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('uploadButton').disabled = false;
+                document.getElementById('progressSection').style.display = 'none';
+            }
+        }
+        
+        // Simulate API upload and store in localStorage
+        async function simulateAPIUpload(formData) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    try {
+                        const file = formData.get('file');
+                        const user = JSON.parse(localStorage.getItem('user') || '{}');
+                        
+                        console.log('=== DEBUG: Starting Resume Upload ===');
+                        console.log('File details:', {
+                            name: file.name,
+                            size: file.size,
+                            type: file.type
+                        });
+                        console.log('User details:', {
+                            id: user.id,
+                            username: user.username,
+                            email: user.email
+                        });
+                        
+                        // Create resume data
+                        const resumeData = {
+                            id: Date.now(),
+                            userId: user.id || 'user_' + Date.now(),
+                            userName: user.username || 'Anonymous User',
+                            userEmail: user.email || 'user@email.com',
+                            fileName: file.name,
+                            fileSize: file.size,
+                            fileType: file.type,
+                            uploadDate: new Date().toISOString(),
+                            status: 'uploaded',
+                            aiScore: Math.floor(Math.random() * 30) + 70, // Random score 70-100
+                            isShortlisted: false,
+                            isRejected: false,
+                            parsedData: generateMockParsedData()
+                        };
+                        
+                        console.log('Generated resume data:', resumeData);
+                        
+                        // Auto-shortlist based on AI score
+                        if (resumeData.aiScore >= 80) {
+                            resumeData.isShortlisted = true;
+                            resumeData.autoShortlisted = true;
+                            resumeData.shortlistedDate = new Date().toISOString();
+                            console.log('🎉 AUTO-SHORTLISTED: Score', resumeData.aiScore, '≥ 80');
+                        } else if (resumeData.aiScore < 60) {
+                            resumeData.isRejected = true;
+                            resumeData.autoRejected = true;
+                            resumeData.rejectedDate = new Date().toISOString();
+                            console.log('❌ AUTO-REJECTED: Score', resumeData.aiScore, '< 60');
+                        } else {
+                            console.log('⏳ MANUAL REVIEW: Score', resumeData.aiScore, 'between 60-79');
+                        }
+                        
+                        console.log('Final resume data after auto-processing:', resumeData);
+                        
+                        // Store in localStorage
+                        const existingResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+                        console.log('Existing resumes before upload:', existingResumes.length);
+                        
+                        existingResumes.push(resumeData);
+                        localStorage.setItem('uploadedResumes', JSON.stringify(existingResumes));
+                        
+                        console.log('Resumes after upload:', existingResumes.length);
+                        console.log('Stored in localStorage successfully!');
+                        console.log('=== END DEBUG: Resume Upload Complete ===');
+                        
+                        // Show success result
+                        showSuccessResult(resumeData);
+                        
+                        resolve(resumeData);
+                    } catch (error) {
+                        console.error('❌ Upload error:', error);
+                        reject(error);
+                    }
+                }, 2000); // Simulate 2 second upload time
+            });
+        }
+        
+        // Generate mock parsed data for demonstration
+        function generateMockParsedData() {
+            const skills = [
+                'Java', 'Python', 'JavaScript', 'React', 'Node.js', 'Spring Boot',
+                'MySQL', 'MongoDB', 'AWS', 'Docker', 'Git', 'Machine Learning',
+                'Data Analysis', 'Communication', 'Problem Solving', 'Team Work'
+            ];
+            
+            const experiences = [
+                '3+ years of software development experience',
+                'Experience with full-stack web development',
+                'Worked on multiple enterprise projects',
+                'Led a team of 5 developers'
+            ];
+            
+            const educations = [
+                'B.E Computer Science from Anna University',
+                'M.Tech Software Engineering from IIT Madras',
+                'Certified AWS Solutions Architect'
+            ];
+            
+            // Randomly select skills
+            const selectedSkills = [];
+            for (let i = 0; i < 8; i++) {
+                const randomSkill = skills[Math.floor(Math.random() * skills.length)];
+                if (!selectedSkills.includes(randomSkill)) {
+                    selectedSkills.push(randomSkill);
+                }
+            }
+            
+            return {
+                name: JSON.parse(localStorage.getItem('user') || '{}').username || 'John Doe',
+                email: JSON.parse(localStorage.getItem('user') || '{}').email || 'john.doe@email.com',
+                phone: '+91-9876543210',
+                skills: selectedSkills,
+                experience: experiences[Math.floor(Math.random() * experiences.length)],
+                education: educations[Math.floor(Math.random() * educations.length)]
+            };
+        }
+        
+        // Simulate progress
+        function simulateProgress() {
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress > 90) {
+                    progress = 90;
+                    clearInterval(interval);
+                }
+                progressBar.style.width = progress + '%';
+                progressBar.textContent = Math.round(progress) + '%';
+            }, 500);
+        }
+        
+        // Show success result
+        function showSuccessResult(resumeData) {
+            const resultSection = document.getElementById('resultSection');
+            
+            console.log('Upload result:', resumeData);
+            
+            let html = `
+                <div class="success-message">
+                    <h4><i class="fas fa-check-circle"></i> Resume Uploaded Successfully!</h4>
+                    <p>Your resume has been processed and analyzed by our AI system.</p>
+                    <p><strong>File:</strong> ${resumeData.fileName}</p>
+                    <p><strong>Upload Date:</strong> ${new Date(resumeData.uploadDate).toLocaleDateString()}</p>
+                </div>
+            `;
+            
+            if (resumeData.parsedData) {
+                console.log('Parsed data:', resumeData.parsedData);
+                
+                html += `
+                    <div class="parsed-info">
+                        <h5><i class="fas fa-robot"></i> AI Analysis Results</h5>
+                        
+                        <div class="info-section">
+                            <div class="info-title">👤 Personal Information</div>
+                            <p><strong>Name:</strong> ${resumeData.parsedData.name || 'Not found'}</p>
+                            <p><strong>Email:</strong> ${resumeData.parsedData.email || 'Not found'}</p>
+                            <p><strong>Phone:</strong> ${resumeData.parsedData.phone || 'Not found'}</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">🛠️ Skills Detected</div>
+                            <div>
+                                ${(() => {
+                                    const skills = resumeData.parsedData.skills;
+                                    if (typeof skills === 'string') {
+                                        return skills.split(',').map(skill => 
+                                            `<span class="skill-tag">${skill.trim()}</span>`
+                                        ).join('');
+                                    } else if (Array.isArray(skills)) {
+                                        return skills.map(skill => 
+                                            `<span class="skill-tag">${skill}</span>`
+                                        ).join('');
+                                    } else {
+                                        return '<span class="text-muted">No skills found</span>';
+                                    }
+                                })()}
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">💼 Experience</div>
+                            <div>
+                                ${resumeData.parsedData.experience ? `<p>${resumeData.parsedData.experience}</p>` : '<p class="text-muted">No experience details found</p>'}
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">🎓 Education</div>
+                            <div>
+                                ${resumeData.parsedData.education ? `<p>${resumeData.parsedData.education}</p>` : '<p class="text-muted">No education details found</p>'}
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">📊 AI Score & Status</div>
+                            <p><strong>Score:</strong> ${resumeData.aiScore || 0}/100</p>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar" style="width: ${resumeData.aiScore || 0}%">
+                                    ${resumeData.aiScore || 0}%
+                                </div>
+                            </div>
+                            <p class="mt-2">
+                                <strong>Status:</strong> 
+                                ${resumeData.isShortlisted ? 
+                                    `<span class="text-success">✅ Auto-Shortlisted (Score ≥ 80)</span>` : 
+                                    resumeData.isRejected ? 
+                                    `<span class="text-danger">❌ Auto-Rejected (Score < 60)</span>` : 
+                                    `<span class="text-warning">⏳ Under Review (Score 60-79)</span>`
+                                }
+                            </p>
+                            ${resumeData.autoShortlisted ? 
+                                `<div class="alert alert-success mt-2">
+                                    <i class="fas fa-star"></i> <strong>Congratulations!</strong> Your resume has been automatically shortlisted based on your high AI score of ${resumeData.aiScore}/100.
+                                </div>` : 
+                                resumeData.autoRejected ? 
+                                `<div class="alert alert-warning mt-2">
+                                    <i class="fas fa-info-circle"></i> Your resume didn't meet the minimum score requirements. Consider improving your skills and experience.
+                                </div>` : 
+                                `<div class="alert alert-info mt-2">
+                                    <i class="fas fa-clock"></i> Your resume is under review. Our team will manually evaluate it based on other criteria.
+                                </div>`
+                            }
+                        </div>
+                    </div>
+                `;
+            } else {
+                html += `
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle"></i> No Parsed Data</h5>
+                        <p>Resume was uploaded but AI analysis failed to extract details.</p>
+                        <p>This could be due to:</p>
+                        <ul>
+                            <li>PDF file is not text-based (scanned image)</li>
+                            <li>PDF is password protected</li>
+                            <li>File format is not supported</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="mt-3">
+                    <a href="/resume-shortlist.html" class="btn btn-primary">
+                        <i class="fas fa-list"></i> View Resume Shortlist
+                    </a>
+                    <button class="btn btn-secondary" onclick="resetUpload()">
+                        <i class="fas fa-plus"></i> Upload Another Resume
+                    </button>
+                    ${resumeData ? `
+                        <button class="btn btn-danger" onclick="deleteResume(${resumeData.id})" title="Delete your uploaded resume">
+                            <i class="fas fa-trash"></i> Delete Resume
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            
+            resultSection.innerHTML = html;
+            resultSection.style.display = 'block';
+            
+            // Complete progress
+            document.getElementById('progressBar').style.width = '100%';
+            document.getElementById('progressBar').textContent = '100%';
+        }
+        
+        // Show error message
+        function showError(message) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.innerHTML = `
+                <div class="error-message">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Upload Failed</h4>
+                    <p>${message}</p>
+                    <button class="btn btn-secondary" onclick="resetUpload()">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                </div>
+            `;
+            resultSection.style.display = 'block';
+        }
+        
+        // Reset upload form
+        function resetUpload() {
+            document.getElementById('resumeFile').value = '';
+            document.getElementById('fileInfo').style.display = 'none';
+            document.getElementById('uploadButton').style.display = 'none';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('progressSection').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressBar').textContent = '0%';
+            selectedFile = null;
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

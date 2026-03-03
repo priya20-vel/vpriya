@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Jobs - Job Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            margin-top: 80px; /* Add margin for fixed navbar */
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 30px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .search-box {
+            background: #f8f9fa;
+            border-radius: 50px;
+            padding: 15px 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1.1rem;
+            background: transparent;
+        }
+        
+        .search-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: #2980b9;
+        }
+        
+        .jobs-section {
+            padding: 60px 0;
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border-left: 5px solid #3498db;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-left-color: #2980b9;
+        }
+        
+        .company-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-right: 25px;
+        }
+        
+        .job-info h4 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        .job-info .company-name {
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .job-info .location {
+            color: #95a5a6;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .job-meta span {
+            background: #ecf0f1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .salary {
+            background: #d4edda !important;
+            color: #155724 !important;
+            font-weight: bold;
+        }
+        
+        .vacancies {
+            background: #fff3cd !important;
+            color: #856404 !important;
+        }
+        
+        .work-mode {
+            background: #d1ecf1 !important;
+            color: #0c5460 !important;
+        }
+        
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .btn-login, .btn-register {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-right: 10px;
+        }
+        
+        .btn-login:hover {
+            background: white;
+            color: #2c3e50;
+        }
+        
+        .btn-register {
+            background: white;
+            color: #2c3e50;
+            border: 2px solid white;
+        }
+        
+        .btn-register:hover {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .filter-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 5px;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #2980b9;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .mt-4 {
+            margin-top: 2rem;
+        }
+        
+        .section-spacing {
+            padding: 4rem 0;
+        }
+        
+        .jobs-section {
+            padding: 4rem 0;
+        }
+        
+        .about-section {
+            padding: 4rem 0;
+        }
+        
+        .contact-section {
+            padding: 4rem 0;
+        }
+        
+        .nav-link.active {
+            color: #3498db !important;
+            font-weight: bold;
+        }
+        
+        .auth-welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .welcome-text {
+            color: white;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .job-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .job-actions .btn {
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+        
+        .job-actions .btn-outline-primary {
+            border-color: #3498db;
+            color: #3498db;
+        }
+        
+        .job-actions .btn-outline-primary:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .job-actions .btn-primary {
+            background: #3498db;
+            border-color: #3498db;
+        }
+        
+        .job-actions .btn-primary:hover {
+            background: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .no-jobs {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase"></i> JobPortal
+            </a>
+            <div class="navbar-nav ms-auto d-flex align-items-center">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link active" href="/jobs.html">Jobs</a>
+                <a class="nav-link" href="/resume-upload.html">Upload Resume</a>
+                <a class="nav-link" href="/resume-shortlist.html">Resume Shortlist</a>
+                <a class="nav-link" href="/#about">About</a>
+                <a class="nav-link" href="/#contact">Contact</a>
+            </div>
+            <div class="auth-buttons d-flex align-items-center">
+                <a href="#" class="btn-login" onclick="showLoginModal()">Login</a>
+                <a href="#" class="btn-register" onclick="showRegisterModal()">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">All Available Jobs</h1>
+            <p class="page-subtitle">Discover opportunities that match your skills and aspirations</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="search-box">
+                        <div class="d-flex align-items-center">
+                            <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords..." id="searchInput">
+                            <button class="search-btn" onclick="searchJobs()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs Section -->
+    <section class="jobs-section section-spacing" id="jobs">
+        <div class="container">
+            <div class="row">
+                <!-- Filters Sidebar -->
+                <div class="col-md-3">
+                    <div class="filter-section">
+                        <h5><i class="fas fa-filter"></i> Filter by Category</h5>
+                        <button class="filter-btn active" onclick="filterByCategory('all')">All Jobs</button>
+                        <button class="filter-btn" onclick="filterByCategory('IT')">IT & Software</button>
+                        <button class="filter-btn" onclick="filterByCategory('Healthcare')">Healthcare</button>
+                        <button class="filter-btn" onclick="filterByCategory('Finance')">Finance</button>
+                        <button class="filter-btn" onclick="filterByCategory('Education')">Education</button>
+                    </div>
+                    
+                    <div class="stats-section">
+                        <h5><i class="fas fa-chart-bar"></i> Statistics</h5>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalJobs">0</div>
+                            <div class="stat-label">Total Jobs</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCompanies">0</div>
+                            <div class="stat-label">Companies</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jobs List -->
+                <div class="col-md-9">
+                    <div id="jobsContainer">
+                        <div class="loading-spinner">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3">Loading jobs...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let allJobs = [];
+        let currentFilter = 'all';
+        
+        // Load all jobs when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            
+            // Check for category parameter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            if (categoryParam) {
+                console.log('Category parameter found:', categoryParam);
+                // Set filter based on URL parameter
+                setTimeout(() => {
+                    filterByCategory(categoryParam);
+                    // Update active button
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.textContent.toLowerCase().includes(categoryParam.toLowerCase()) ||
+                            (categoryParam === 'IT' && btn.textContent.includes('IT & Software'))) {
+                            btn.classList.add('active');
+                        }
+                    });
+                }, 100);
+            } else {
+                loadAllJobs();
+            }
+        });
+        
+        // Load all jobs from API
+        async function loadAllJobs() {
+            try {
+                const response = await fetch('/api/jobs/all');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                allJobs = await response.json();
+                console.log('Loaded jobs:', allJobs.length);
+                
+                displayJobs(allJobs);
+                updateStats();
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                showSampleJobs();
+            }
+        }
+        
+        // Display jobs
+        function displayJobs(jobs) {
+            const container = document.getElementById('jobsContainer');
+            
+            if (jobs.length === 0) {
+                container.innerHTML = `
+                    <div class="no-jobs">
+                        <i class="fas fa-search fa-3x mb-3"></i>
+                        <h3>No jobs found</h3>
+                        <p>Try adjusting your filters or search terms</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            jobs.forEach(job => {
+                html += createJobCard(job);
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Create job card HTML
+        function createJobCard(job) {
+            return `
+                <div class="job-card">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="d-flex align-items-start">
+                            <div class="company-logo">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="job-info">
+                                <h4>${job.title}</h4>
+                                <div class="company-name">${job.companyName || 'Leading Company'}</div>
+                                <div class="location">
+                                    <i class="fas fa-map-marker-alt"></i> ${job.workLocation || 'Chennai'}
+                                    <span class="salary ms-3">
+                                        <i class="fas fa-rupee-sign"></i> ${job.minSalary || '50000'} - ${job.maxSalary || '80000'}
+                                    </span>
+                                </div>
+                                <div class="job-meta">
+                                    <span><i class="fas fa-briefcase"></i> ${job.employmentType || 'Full-time'}</span>
+                                    <span><i class="fas fa-users"></i> ${job.vacancies || '1'} Vacancies</span>
+                                    <span><i class="fas fa-home"></i> ${job.workMode || 'Office'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="job-actions">
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewJobDetails(${job.id})">View</button>
+                            <button class="btn btn-sm btn-primary ms-2" onclick="applyForJob(${job.id}, '${job.title}', '${job.companyName}')">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function viewJobDetails(jobId) {
+            // Show job details modal with option to apply
+            showJobDetailsModal(jobId);
+        }
+        
+        function showJobDetailsModal(jobId) {
+            // Find job details from category jobs
+            const jobDetails = findJobById(jobId);
+            
+            if (!jobDetails) {
+                alert('Job details not found!');
+                return;
+            }
+            
+            // Get detailed job requirements
+            const detailedRequirements = getDetailedJobRequirements(jobDetails.title, jobDetails.companyName);
+            
+            // Create modal HTML
+            const modalHtml = `
+                <div class="modal fade" id="jobDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-info-circle"></i> ${jobDetails.title}
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Company Info -->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="company-logo me-3">
+                                                <i class="fas fa-building"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-1">${jobDetails.companyName}</h5>
+                                                <p class="text-muted mb-0">${detailedRequirements.companyDescription}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job Overview -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-briefcase"></i> Job Overview</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Position:</strong> ${jobDetails.title}</p>
+                                                <p><strong>Location:</strong> ${jobDetails.workLocation}</p>
+                                                <p><strong>Work Mode:</strong> ${jobDetails.workMode}</p>
+                                                <p><strong>Employment Type:</strong> ${jobDetails.employmentType}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Salary:</strong> ₹${jobDetails.minSalary} - ₹${jobDetails.maxSalary} per month</p>
+                                                <p><strong>Vacancies:</strong> ${jobDetails.vacancies}</p>
+                                                <p><strong>Last Date:</strong> <span class="text-danger">${detailedRequirements.lastDate}</span></p>
+                                                <p><strong>Posted:</strong> ${detailedRequirements.postedDate}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job Description -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-file-alt"></i> Job Description</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>${detailedRequirements.jobDescription}</p>
+                                        
+                                        <h6>Key Responsibilities:</h6>
+                                        <ul>
+                                            ${detailedRequirements.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Requirements -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-clipboard-list"></i> Requirements</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6>Education:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.education.map(edu => `<li><i class="fas fa-check text-success"></i> ${edu}</li>`).join('')}
+                                        </ul>
+                                        
+                                        <h6 class="mt-3">Experience:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.experience.map(exp => `<li><i class="fas fa-check text-success"></i> ${exp}</li>`).join('')}
+                                        </ul>
+                                        
+                                        <h6 class="mt-3">Skills Required:</h6>
+                                        <div class="skills-tags mb-3">
+                                            ${detailedRequirements.skills.map(skill => `<span class="badge bg-primary me-2 mb-2">${skill}</span>`).join('')}
+                                        </div>
+                                        
+                                        <h6>Additional Requirements:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.additionalRequirements.map(req => `<li><i class="fas fa-check text-info"></i> ${req}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Benefits -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-gift"></i> Benefits & Perks</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            ${detailedRequirements.benefits.map(benefit => `<li><i class="fas fa-star text-warning"></i> ${benefit}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Application Form -->
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user-edit"></i> Apply for this Position</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="jobDetailsApplicationForm">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Full Name *</label>
+                                                    <input type="text" class="form-control" id="detailsApplicantName" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email *</label>
+                                                    <input type="email" class="form-control" id="detailsApplicantEmail" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Phone Number *</label>
+                                                    <input type="tel" class="form-control" id="detailsApplicantPhone" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Location *</label>
+                                                    <input type="text" class="form-control" id="detailsApplicantLocation" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Total Experience *</label>
+                                                    <select class="form-control" id="detailsApplicantExperience" required>
+                                                        <option value="">Select Experience</option>
+                                                        <option value="Fresher">Fresher</option>
+                                                        <option value="0-1 years">0-1 years</option>
+                                                        <option value="1-3 years">1-3 years</option>
+                                                        <option value="3-5 years">3-5 years</option>
+                                                        <option value="5-10 years">5-10 years</option>
+                                                        <option value="10+ years">10+ years</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Company</label>
+                                                    <input type="text" class="form-control" id="detailsCurrentCompany" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Key Skills *</label>
+                                                <textarea class="form-control" id="detailsApplicantSkills" rows="3" placeholder="Enter your key skills separated by commas" required></textarea>
+                                                <small class="text-muted">Example: Java, Spring Boot, MySQL, AWS, Git</small>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Cover Letter</label>
+                                                <textarea class="form-control" id="detailsCoverLetter" rows="4" placeholder="Tell us why you're interested in this position..."></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Resume/CV *</label>
+                                                <input type="file" class="form-control" id="detailsResumeFile" accept=".pdf,.doc,.docx" required>
+                                                <small class="text-muted">Upload your resume (PDF, DOC, DOCX - Max 5MB)</small>
+                                            </div>
+                                            
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="detailsTermsCheck" required>
+                                                <label class="form-check-label" for="detailsTermsCheck">
+                                                    I agree to the terms and conditions and confirm that all information provided is accurate.
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-success" onclick="submitJobDetailsApplication(${jobDetails.id}, '${jobDetails.title}', '${jobDetails.companyName}')">
+                                    <i class="fas fa-paper-plane"></i> Apply Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('jobDetailsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('jobDetailsModal'));
+            modal.show();
+            
+            // Pre-fill user data if available
+            prefillJobDetailsForm();
+        }
+        
+        function findJobById(jobId) {
+            // Search through all category jobs
+            const allCategories = ['IT', 'Healthcare', 'Finance', 'Education'];
+            
+            for (const category of allCategories) {
+                const categoryJobs = getCategoryJobs(category);
+                const job = categoryJobs.find(j => j.id === jobId);
+                if (job) {
+                    return job;
+                }
+            }
+            return null;
+        }
+        
+        function getCategoryJobs(category) {
+            // Return jobs for a specific category (simplified version)
+            const categoryJobs = {
+                'IT': [
+                    {id: 1, title: "Senior Java Developer", companyName: "Tech Solutions Inc.", workLocation: "Chennai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 2, title: "Python Data Scientist", companyName: "Data Analytics Pro", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 3, title: "Frontend Developer", companyName: "Web Innovations Ltd", workLocation: "Chennai", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"}
+                ],
+                'Healthcare': [
+                    {id: 51, title: "Senior Medical Officer", companyName: "General Hospital", workLocation: "Delhi", minSalary: 90000, maxSalary: 130000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 52, title: "Registered Nurse", companyName: "General Hospital", workLocation: "Delhi", minSalary: 40000, maxSalary: 60000, employmentType: "Full-time", vacancies: 8, workMode: "Office"}
+                ],
+                'Finance': [
+                    {id: 101, title: "Senior Accountant", companyName: "Finance Experts Ltd", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 102, title: "Financial Analyst", companyName: "Investment Analytics Pro", workLocation: "Delhi", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"}
+                ],
+                'Education': [
+                    {id: 151, title: "Senior Professor", companyName: "University College", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 1, workMode: "Office"},
+                    {id: 152, title: "High School Teacher", companyName: "Education Academy", workLocation: "Chennai", minSalary: 35000, maxSalary: 50000, employmentType: "Full-time", vacancies: 5, workMode: "Office"}
+                ]
+            };
+            
+            return categoryJobs[category] || [];
+        }
+        
+        function getDetailedJobRequirements(jobTitle, companyName) {
+            const requirements = {
+                'Senior Java Developer': {
+                    companyDescription: "Leading IT solutions provider specializing in enterprise software development",
+                    lastDate: "March 15, 2024",
+                    postedDate: "February 20, 2024",
+                    jobDescription: "We are looking for an experienced Senior Java Developer to join our dynamic team. You will be responsible for developing high-quality software solutions and working with cutting-edge technologies.",
+                    responsibilities: [
+                        "Design and develop Java-based applications using Spring Boot framework",
+                        "Write clean, maintainable, and efficient code",
+                        "Collaborate with cross-functional teams to define and ship new features",
+                        "Participate in code reviews and ensure code quality standards",
+                        "Troubleshoot, debug and upgrade existing systems",
+                        "Mentor junior developers and provide technical guidance"
+                    ],
+                    education: [
+                        "B.E/B.Tech in Computer Science or related field",
+                        "M.Tech/MCA preferred",
+                        "Minimum 60% throughout academics"
+                    ],
+                    experience: [
+                        "Minimum 3 years of Java development experience",
+                        "Experience with Spring Boot framework",
+                        "Hands-on experience with REST APIs",
+                        "Database knowledge (MySQL, PostgreSQL)"
+                    ],
+                    skills: ['Java', 'Spring Boot', 'REST APIs', 'MySQL', 'AWS', 'Git', 'Maven', 'Jenkins'],
+                    additionalRequirements: [
+                        "Strong problem-solving skills",
+                        "Excellent communication skills",
+                        "Ability to work in a team environment",
+                        "Willingness to learn new technologies"
+                    ],
+                    benefits: [
+                        "Competitive salary and performance bonuses",
+                        "Health insurance for you and your family",
+                        "Provident Fund and gratuity",
+                        "Flexible working hours",
+                        "Professional development opportunities",
+                        "Annual company trips and team building activities"
+                    ]
+                },
+                'Python Data Scientist': {
+                    companyDescription: "Data analytics company focused on machine learning and AI solutions",
+                    lastDate: "March 20, 2024",
+                    postedDate: "February 22, 2024",
+                    jobDescription: "Join our data science team to work on cutting-edge machine learning projects and help businesses make data-driven decisions.",
+                    responsibilities: [
+                        "Develop and implement machine learning models",
+                        "Analyze large datasets to extract meaningful insights",
+                        "Create data visualizations and reports",
+                        "Collaborate with business stakeholders to understand requirements",
+                        "Optimize algorithms for better performance",
+                        "Stay updated with latest ML/AI trends"
+                    ],
+                    education: [
+                        "B.Sc/M.Sc in Statistics, Mathematics, or Computer Science",
+                        "M.Tech in Data Science preferred",
+                        "PhD in relevant field is a plus"
+                    ],
+                    experience: [
+                        "2+ years of experience in data analysis",
+                        "Experience with Python and data science libraries",
+                        "Knowledge of statistical analysis and machine learning",
+                        "Experience with data visualization tools"
+                    ],
+                    skills: ['Python', 'Machine Learning', 'Data Analysis', 'SQL', 'Tableau', 'Pandas', 'NumPy', 'Scikit-learn'],
+                    additionalRequirements: [
+                        "Strong analytical and problem-solving skills",
+                        "Experience with big data technologies",
+                        "Knowledge of cloud platforms (AWS/Azure/GCP)",
+                        "Excellent presentation skills"
+                    ],
+                    benefits: [
+                        "Stock options and ESOP",
+                        "Flexible work from home policy",
+                        "Conference and training budget",
+                        "Latest MacBook Pro and equipment",
+                        "Gym membership and wellness programs",
+                        "Free snacks and beverages"
+                    ]
+                },
+                'Frontend Developer': {
+                    companyDescription: "Innovative web development company creating modern user experiences",
+                    lastDate: "March 10, 2024",
+                    postedDate: "February 25, 2024",
+                    jobDescription: "We are seeking a talented Frontend Developer to create amazing user interfaces and enhance our web applications.",
+                    responsibilities: [
+                        "Develop responsive and interactive web applications",
+                        "Collaborate with UX designers to implement designs",
+                        "Optimize applications for maximum speed and scalability",
+                        "Write clean, well-documented code",
+                        "Participate in code reviews and agile development",
+                        "Stay current with emerging frontend technologies"
+                    ],
+                    education: [
+                        "B.E/B.Tech in Computer Science or related field",
+                        "B.Sc in Computer Science or IT",
+                        "Diploma in Web Development"
+                    ],
+                    experience: [
+                        "1-3 years of frontend development experience",
+                        "Experience with modern JavaScript frameworks",
+                        "Knowledge of responsive design principles",
+                        "Experience with version control systems"
+                    ],
+                    skills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'TypeScript', 'Redux', 'Webpack', 'Git'],
+                    additionalRequirements: [
+                        "Strong understanding of web standards",
+                        "Experience with UI/UX design principles",
+                        "Knowledge of performance optimization",
+                        "Ability to work independently"
+                    ],
+                    benefits: [
+                        "Remote work opportunity",
+                        "Flexible working hours",
+                        "Annual performance bonus",
+                        "Health and dental insurance",
+                        "Paid time off and holidays",
+                        "Professional development budget"
+                    ]
+                }
+            };
+            
+            return requirements[jobTitle] || requirements['Senior Java Developer'];
+        }
+        
+        function prefillJobDetailsForm() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.username) {
+                document.getElementById('detailsApplicantName').value = user.username || '';
+            }
+            if (user.email) {
+                document.getElementById('detailsApplicantEmail').value = user.email || '';
+            }
+        }
+        
+        function submitJobDetailsApplication(jobId, jobTitle, companyName) {
+            const form = document.getElementById('jobDetailsApplicationForm');
+            
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Collect form data
+            const applicationData = {
+                id: Date.now(),
+                jobId: jobId,
+                jobTitle: jobTitle,
+                company: companyName,
+                applicantName: document.getElementById('detailsApplicantName').value,
+                applicantEmail: document.getElementById('detailsApplicantEmail').value,
+                applicantPhone: document.getElementById('detailsApplicantPhone').value,
+                applicantLocation: document.getElementById('detailsApplicantLocation').value,
+                experience: document.getElementById('detailsApplicantExperience').value,
+                currentCompany: document.getElementById('detailsCurrentCompany').value,
+                skills: document.getElementById('detailsApplicantSkills').value,
+                coverLetter: document.getElementById('detailsCoverLetter').value,
+                resumeFile: document.getElementById('detailsResumeFile').files[0]?.name || '',
+                appliedDate: new Date().toISOString().split('T')[0],
+                status: 'pending',
+                userId: JSON.parse(localStorage.getItem('user') || '{}').id || 'user_' + Date.now()
+            };
+            
+            // Store application
+            const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+            applications.push(applicationData);
+            localStorage.setItem('jobApplications', JSON.stringify(applications));
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('jobDetailsModal'));
+            modal.hide();
+            
+            // Show success message
+            showApplicationSuccess(jobTitle, companyName);
+            
+            // Notify company dashboard
+            setTimeout(() => {
+                showCompanyNotification(companyName, jobTitle, applicationData.applicantName);
+            }, 1000);
+        }
+        
+        function applyForJob(jobId, jobTitle, companyName) {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to apply for jobs!');
+                // Redirect to login or show login modal
+                window.location.href = '/';
+                return;
+            }
+            
+            // Show detailed application modal
+            showApplicationModal(jobId, jobTitle, companyName);
+        }
+        
+        function showApplicationModal(jobId, jobTitle, companyName) {
+            // Get job details
+            const jobDetails = getJobDetails(jobId, jobTitle, companyName);
+            
+            // Create modal HTML
+            const modalHtml = `
+                <div class="modal fade" id="applicationModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-briefcase"></i> Apply for ${jobTitle}
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Job Details Section -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> Job Details</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Position:</strong> ${jobTitle}</p>
+                                                <p><strong>Company:</strong> ${companyName}</p>
+                                                <p><strong>Location:</strong> ${jobDetails.location}</p>
+                                                <p><strong>Work Mode:</strong> ${jobDetails.workMode}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Salary:</strong> ${jobDetails.salary}</p>
+                                                <p><strong>Employment Type:</strong> ${jobDetails.employmentType}</p>
+                                                <p><strong>Last Date:</strong> <span class="text-danger">${jobDetails.lastDate}</span></p>
+                                                <p><strong>Vacancies:</strong> ${jobDetails.vacancies}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Requirements Section -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-clipboard-list"></i> Requirements</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="requirements-section">
+                                            <h6>Education:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.education.map(edu => `<li><i class="fas fa-check text-success"></i> ${edu}</li>`).join('')}
+                                            </ul>
+                                            
+                                            <h6 class="mt-3">Experience:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.experience.map(exp => `<li><i class="fas fa-check text-success"></i> ${exp}</li>`).join('')}
+                                            </ul>
+                                            
+                                            <h6 class="mt-3">Skills Required:</h6>
+                                            <div class="skills-tags">
+                                                ${jobDetails.skills.map(skill => `<span class="badge bg-primary me-2 mb-2">${skill}</span>`).join('')}
+                                            </div>
+                                            
+                                            <h6 class="mt-3">Additional Requirements:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.additionalRequirements.map(req => `<li><i class="fas fa-check text-info"></i> ${req}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Application Form -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-user-edit"></i> Application Details</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="applicationForm">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Full Name *</label>
+                                                    <input type="text" class="form-control" id="applicantName" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email *</label>
+                                                    <input type="email" class="form-control" id="applicantEmail" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Phone Number *</label>
+                                                    <input type="tel" class="form-control" id="applicantPhone" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Location *</label>
+                                                    <input type="text" class="form-control" id="applicantLocation" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Total Experience *</label>
+                                                    <select class="form-control" id="applicantExperience" required>
+                                                        <option value="">Select Experience</option>
+                                                        <option value="Fresher">Fresher</option>
+                                                        <option value="0-1 years">0-1 years</option>
+                                                        <option value="1-3 years">1-3 years</option>
+                                                        <option value="3-5 years">3-5 years</option>
+                                                        <option value="5-10 years">5-10 years</option>
+                                                        <option value="10+ years">10+ years</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Company</label>
+                                                    <input type="text" class="form-control" id="currentCompany" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Highest Qualification *</label>
+                                                    <select class="form-control" id="qualification" required>
+                                                        <option value="">Select Qualification</option>
+                                                        <option value="10th">10th</option>
+                                                        <option value="12th">12th</option>
+                                                        <option value="Diploma">Diploma</option>
+                                                        <option value="Bachelors">Bachelors</option>
+                                                        <option value="Masters">Masters</option>
+                                                        <option value="PhD">PhD</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Field of Study *</label>
+                                                    <input type="text" class="form-control" id="fieldOfStudy" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Key Skills *</label>
+                                                <textarea class="form-control" id="applicantSkills" rows="3" placeholder="Enter your key skills separated by commas" required></textarea>
+                                                <small class="text-muted">Example: Java, Spring Boot, MySQL, AWS, Git</small>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Cover Letter</label>
+                                                <textarea class="form-control" id="coverLetter" rows="4" placeholder="Tell us why you're interested in this position..."></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Expected Salary (Monthly)</label>
+                                                <input type="text" class="form-control" id="expectedSalary" placeholder="e.g., 50000-70000">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Notice Period</label>
+                                                <select class="form-control" id="noticePeriod">
+                                                    <option value="Immediate">Immediate</option>
+                                                    <option value="15 days">15 days</option>
+                                                    <option value="30 days">30 days</option>
+                                                    <option value="60 days">60 days</option>
+                                                    <option value="90 days">90 days</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Resume/CV *</label>
+                                                <input type="file" class="form-control" id="resumeFile" accept=".pdf,.doc,.docx" required>
+                                                <small class="text-muted">Upload your resume (PDF, DOC, DOCX - Max 5MB)</small>
+                                            </div>
+                                            
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                                <label class="form-check-label" for="termsCheck">
+                                                    I agree to the terms and conditions and confirm that all information provided is accurate.
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="submitApplication(${jobId}, '${jobTitle}', '${companyName}')">
+                                    <i class="fas fa-paper-plane"></i> Submit Application
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('applicationModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('applicationModal'));
+            modal.show();
+            
+            // Pre-fill user data if available
+            prefillApplicationForm();
+        }
+        
+        function getJobDetails(jobId, jobTitle, companyName) {
+            // Sample job details - in real app, this would come from backend
+            const jobDetailsMap = {
+                'Senior Java Developer': {
+                    location: 'Chennai, Tamil Nadu',
+                    workMode: 'Office',
+                    salary: '₹80,000 - ₹120,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 15, 2024',
+                    vacancies: '3',
+                    education: [
+                        'B.E/B.Tech in Computer Science or related field',
+                        'M.Tech/MCA preferred',
+                        'Minimum 60% throughout academics'
+                    ],
+                    experience: [
+                        'Minimum 3 years of Java development experience',
+                        'Experience with Spring Boot framework',
+                        'Hands-on experience with REST APIs',
+                        'Database knowledge (MySQL, PostgreSQL)'
+                    ],
+                    skills: ['Java', 'Spring Boot', 'REST APIs', 'MySQL', 'AWS', 'Git', 'Maven', 'Jenkins'],
+                    additionalRequirements: [
+                        'Strong problem-solving skills',
+                        'Excellent communication skills',
+                        'Ability to work in a team environment',
+                        'Willingness to learn new technologies'
+                    ]
+                },
+                'Python Data Scientist': {
+                    location: 'Bangalore, Karnataka',
+                    workMode: 'Office',
+                    salary: '₹70,000 - ₹100,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 20, 2024',
+                    vacancies: '2',
+                    education: [
+                        'B.Sc/M.Sc in Statistics, Mathematics, or Computer Science',
+                        'M.Tech in Data Science preferred',
+                        'PhD in relevant field is a plus'
+                    ],
+                    experience: [
+                        '2+ years of experience in data analysis',
+                        'Experience with Python and data science libraries',
+                        'Knowledge of statistical analysis and machine learning',
+                        'Experience with data visualization tools'
+                    ],
+                    skills: ['Python', 'Machine Learning', 'Data Analysis', 'SQL', 'Tableau', 'Pandas', 'NumPy', 'Scikit-learn'],
+                    additionalRequirements: [
+                        'Strong analytical and problem-solving skills',
+                        'Experience with big data technologies',
+                        'Knowledge of cloud platforms (AWS/Azure/GCP)',
+                        'Excellent presentation skills'
+                    ]
+                },
+                'Frontend Developer': {
+                    location: 'Chennai, Tamil Nadu',
+                    workMode: 'Remote',
+                    salary: '₹60,000 - ₹90,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 10, 2024',
+                    vacancies: '4',
+                    education: [
+                        'B.E/B.Tech in Computer Science or related field',
+                        'B.Sc in Computer Science or IT',
+                        'Diploma in Web Development'
+                    ],
+                    experience: [
+                        '1-3 years of frontend development experience',
+                        'Experience with modern JavaScript frameworks',
+                        'Knowledge of responsive design principles',
+                        'Experience with version control systems'
+                    ],
+                    skills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'TypeScript', 'Redux', 'Webpack', 'Git'],
+                    additionalRequirements: [
+                        'Strong understanding of web standards',
+                        'Experience with UI/UX design principles',
+                        'Knowledge of performance optimization',
+                        'Ability to work independently'
+                    ]
+                }
+            };
+            
+            return jobDetailsMap[jobTitle] || jobDetailsMap['Senior Java Developer'];
+        }
+        
+        function prefillApplicationForm() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.username) {
+                document.getElementById('applicantName').value = user.username || '';
+            }
+            if (user.email) {
+                document.getElementById('applicantEmail').value = user.email || '';
+            }
+        }
+        
+        function submitApplication(jobId, jobTitle, companyName) {
+            const form = document.getElementById('applicationForm');
+            
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Collect form data
+            const applicationData = {
+                id: Date.now(),
+                jobId: jobId,
+                jobTitle: jobTitle,
+                company: companyName,
+                applicantName: document.getElementById('applicantName').value,
+                applicantEmail: document.getElementById('applicantEmail').value,
+                applicantPhone: document.getElementById('applicantPhone').value,
+                applicantLocation: document.getElementById('applicantLocation').value,
+                experience: document.getElementById('applicantExperience').value,
+                currentCompany: document.getElementById('currentCompany').value,
+                qualification: document.getElementById('qualification').value,
+                fieldOfStudy: document.getElementById('fieldOfStudy').value,
+                skills: document.getElementById('applicantSkills').value,
+                coverLetter: document.getElementById('coverLetter').value,
+                expectedSalary: document.getElementById('expectedSalary').value,
+                noticePeriod: document.getElementById('noticePeriod').value,
+                resumeFile: document.getElementById('resumeFile').files[0]?.name || '',
+                appliedDate: new Date().toISOString().split('T')[0],
+                status: 'pending',
+                userId: JSON.parse(localStorage.getItem('user') || '{}').id || 'user_' + Date.now()
+            };
+            
+            // Store application
+            const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+            applications.push(applicationData);
+            localStorage.setItem('jobApplications', JSON.stringify(applications));
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('applicationModal'));
+            modal.hide();
+            
+            // Show success message
+            showApplicationSuccess(jobTitle, companyName);
+            
+            // Notify company dashboard
+            setTimeout(() => {
+                showCompanyNotification(companyName, jobTitle, applicationData.applicantName);
+            }, 1000);
+        }
+        
+        function showApplicationSuccess(jobTitle, companyName) {
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            successAlert.style.zIndex = '9999';
+            successAlert.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3"></i>
+                    <div>
+                        <strong>Application Submitted Successfully!</strong><br>
+                        <small>Your application for <strong>${jobTitle}</strong> at <strong>${companyName}</strong> has been received.</small><br>
+                        <small>The company will review your application and contact you soon.</small>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-3" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.body.appendChild(successAlert);
+            
+            // Remove alert after 8 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 8000);
+        }
+        
+        function showCompanyNotification(companyName, jobTitle, applicantName) {
+            // This simulates a notification that would appear on the company dashboard
+            console.log(`Company Notification: ${companyName} received application from ${applicantName} for ${jobTitle}`);
+            
+            // In a real application, this would send a WebSocket event or push notification
+            // to the company dashboard to show the new application in real-time
+        }
+        
+        // Format salary
+        function formatSalary(amount) {
+            if (!amount) return 'N/A';
+            return new Intl.NumberFormat('en-IN').format(amount);
+        }
+        
+        // Filter by category
+        function filterByCategory(category) {
+            console.log('=== DEBUG: Filter by Category ===');
+            console.log('Selected category:', category);
+            console.log('Total jobs before filter:', allJobs.length);
+            
+            currentFilter = category;
+            
+            // Update URL with category parameter
+            const url = new URL(window.location);
+            if (category === 'all') {
+                url.searchParams.delete('category');
+            } else {
+                url.searchParams.set('category', category);
+            }
+            window.history.replaceState({}, '', url);
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Find and activate the correct button
+            const activeBtn = Array.from(document.querySelectorAll('.filter-btn')).find(btn => {
+                const btnText = btn.textContent.toLowerCase();
+                const categoryLower = category.toLowerCase();
+                
+                if (categoryLower === 'all' && btnText.includes('all')) {
+                    return true;
+                }
+                if (categoryLower === 'it' && btnText.includes('it & software')) {
+                    return true;
+                }
+                if (btnText.includes(categoryLower)) {
+                    return true;
+                }
+                return false;
+            });
+            
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
+            
+            if (category === 'all') {
+                displayJobs(allJobs);
+                updateStats();
+                return;
+            }
+            
+            // Filter jobs
+            const filteredJobs = allJobs.filter(job => {
+                const title = job.title.toLowerCase();
+                const skills = job.skills.toLowerCase();
+                const company = job.companyName?.toLowerCase() || '';
+                const description = job.description?.toLowerCase() || '';
+                
+                console.log(`Filtering job: ${job.title} for category: ${category}`);
+                console.log(`Title: ${title}, Skills: ${skills}, Company: ${company}`);
+                
+                switch(category) {
+                    case 'IT':
+                        const itKeywords = [
+                            'developer', 'engineer', 'java', 'python', 'javascript', 'react', 
+                            'angular', 'vue', 'node', 'spring', 'django', 'flask', 'ruby', 'php',
+                            'frontend', 'backend', 'fullstack', 'full-stack', 'devops', 'mobile',
+                            'android', 'ios', 'swift', 'kotlin', 'flutter', 'react native', 
+                            'qa', 'testing', 'selenium', 'cypress', 'test', 'automation',
+                            'software', 'programmer', 'coder', 'technical', 'system', 'database',
+                            'sql', 'nosql', 'mongodb', 'mysql', 'postgresql', 'oracle',
+                            'aws', 'azure', 'gcp', 'cloud', 'kubernetes', 'docker', 'jenkins',
+                            'git', 'github', 'bitbucket', 'agile', 'scrum', 'api', 'web',
+                            'html', 'css', 'typescript', 'nodejs', 'express', 'spring boot',
+                            'hibernate', 'jpa', 'microservices', 'architecture', 'design'
+                        ];
+                        
+                        const hasITKeyword = itKeywords.some(keyword => 
+                            title.includes(keyword) || 
+                            skills.includes(keyword) || 
+                            company.includes(keyword) ||
+                            description.includes(keyword)
+                        );
+                        
+                        console.log(`IT Keywords found: ${hasITKeyword}`);
+                        return hasITKeyword;
+                        
+                    case 'Healthcare':
+                        const healthcareKeywords = [
+                            'doctor', 'nurse', 'medical', 'health', 'hospital', 'clinic',
+                            'pharmacist', 'pharmacy', 'medicine', 'surgery', 'patient',
+                            'diagnosis', 'treatment', 'therapist', 'psychologist', 'psychiatrist',
+                            'dentist', 'dental', 'optometrist', 'chiropractor', 'physician',
+                            'surgeon', 'anesthesiologist', 'radiologist', 'pathologist',
+                            'pediatrician', 'gynecologist', 'cardiologist', 'neurologist',
+                            'healthcare', 'health care', 'medical center', 'emergency'
+                        ];
+                        
+                        const hasHealthcareKeyword = healthcareKeywords.some(keyword => 
+                            title.includes(keyword) || 
+                            skills.includes(keyword) || 
+                            company.includes(keyword) ||
+                            description.includes(keyword)
+                        );
+                        
+                        console.log(`Healthcare Keywords found: ${hasHealthcareKeyword}`);
+                        return hasHealthcareKeyword;
+                        
+                    case 'Finance':
+                        const financeKeywords = [
+                            'accountant', 'accounting', 'finance', 'financial', 'analyst',
+                            'bank', 'banking', 'investment', 'invest', 'stock', 'trader',
+                            'trading', 'broker', 'wealth', 'portfolio', 'fund', 'mutual fund',
+                            'insurance', 'tax', 'taxation', 'audit', 'auditor', 'cfo',
+                            'controller', 'treasurer', 'credit', 'loan', 'mortgage', 'risk',
+                            'compliance', 'regulatory', 'fintech', 'cryptocurrency', 'bitcoin',
+                            'blockchain', 'account', 'bookkeeping', 'payroll', 'billing',
+                            'budget', 'forecasting', 'cfa', 'cpa', 'mba', 'economics'
+                        ];
+                        
+                        const hasFinanceKeyword = financeKeywords.some(keyword => 
+                            title.includes(keyword) || 
+                            skills.includes(keyword) || 
+                            company.includes(keyword) ||
+                            description.includes(keyword)
+                        );
+                        
+                        console.log(`Finance Keywords found: ${hasFinanceKeyword}`);
+                        return hasFinanceKeyword;
+                        
+                    case 'Education':
+                        const educationKeywords = [
+                            'teacher', 'teaching', 'education', 'educator', 'professor',
+                            'instructor', 'trainer', 'training', 'coach', 'tutor',
+                            'school', 'college', 'university', 'academic', 'curriculum',
+                            'student', 'learning', 'course', 'lesson', 'classroom',
+                            'principal', 'dean', 'director', 'administrator', 'librarian',
+                            'counselor', 'advisor', 'mentor', 'research', 'scholarship',
+                            'degree', 'master', 'bachelor', 'phd', 'diploma', 'certification',
+                            'online', 'e-learning', 'mooc', 'coursera', 'udemy', 'khan academy'
+                        ];
+                        
+                        const hasEducationKeyword = educationKeywords.some(keyword => 
+                            title.includes(keyword) || 
+                            skills.includes(keyword) || 
+                            company.includes(keyword) ||
+                            description.includes(keyword)
+                        );
+                        
+                        console.log(`Education Keywords found: ${hasEducationKeyword}`);
+                        return hasEducationKeyword;
+                        
+                    default:
+                        return true;
+                }
+            });
+            
+            console.log(`Filtered ${filteredJobs.length} jobs out of ${allJobs.length} total jobs for category: ${category}`);
+            console.log('Filtered job titles:', filteredJobs.map(job => job.title));
+            displayJobs(filteredJobs);
+            updateFilteredStats(filteredJobs);
+            console.log('=== END DEBUG: Category Filter Complete ===');
+        }
+        
+        // Search jobs
+        function searchJobs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                displayJobs(allJobs);
+                return;
+            }
+            
+            const filteredJobs = allJobs.filter(job => {
+                return job.title.toLowerCase().includes(searchTerm) ||
+                       job.companyName?.toLowerCase().includes(searchTerm) ||
+                       job.skills.toLowerCase().includes(searchTerm) ||
+                       job.workLocation?.toLowerCase().includes(searchTerm);
+            });
+            
+            displayJobs(filteredJobs);
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalJobs').textContent = allJobs.length;
+            
+            const uniqueCompanies = [...new Set(allJobs.map(job => job.companyName).filter(Boolean))];
+            document.getElementById('totalCompanies').textContent = uniqueCompanies.length;
+        }
+        
+        // Update filtered statistics
+        function updateFilteredStats(filteredJobs) {
+            document.getElementById('totalJobs').textContent = filteredJobs.length;
+            
+            const uniqueCompanies = [...new Set(filteredJobs.map(job => job.companyName).filter(Boolean))];
+            document.getElementById('totalCompanies').textContent = uniqueCompanies.length;
+        }
+        
+        // Show sample jobs if API fails
+        function showSampleJobs() {
+            allJobs = [
+                {
+                    id: 1,
+                    title: "Senior Java Developer",
+                    companyName: "Tech Solutions Inc.",
+                    workLocation: "Chennai",
+                    minSalary: 80000,
+                    maxSalary: 120000,
+                    employmentType: "Full-time",
+                    vacancies: 3,
+                    workMode: "Hybrid",
+                    skills: "Java, Spring Boot, Microservices"
+                },
+                {
+                    id: 2,
+                    title: "Python Data Scientist",
+                    companyName: "Data Analytics Pro",
+                    workLocation: "Bangalore",
+                    minSalary: 70000,
+                    maxSalary: 100000,
+                    employmentType: "Full-time",
+                    vacancies: 2,
+                    workMode: "Office",
+                    skills: "Python, Machine Learning, Data Analysis"
+                },
+                {
+                    id: 3,
+                    title: "Frontend Developer",
+                    companyName: "Web Innovations Ltd",
+                    workLocation: "Chennai",
+                    minSalary: 60000,
+                    maxSalary: 90000,
+                    employmentType: "Full-time",
+                    vacancies: 4,
+                    workMode: "Remote",
+                    skills: "React, JavaScript, TypeScript, CSS"
+                }
+            ];
+            
+            displayJobs(allJobs);
+            updateStats();
+        }
+        
+        // View job details
+        function viewJob(jobId) {
+            alert(`Viewing job details for job ID: ${jobId}\n\nThis would navigate to job details page.\nFor now, you can see the job information in the card.`);
+        }
+        
+        // Handle Enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchJobs();
+            }
+        });
+        
+        // Auth functions (same as index.html)
+        function showLoginModal() {
+            alert('Login functionality would be implemented here');
+        }
+        
+        function showRegisterModal() {
+            alert('Register functionality would be implemented here');
+        }
+        
+        function checkAuthState() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (token) {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <div class="auth-welcome">
+                        <span class="welcome-text">Welcome, ${user.username || 'User'}!</span>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+                    </div>
+                `;
+            } else {
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <a href="#" class="btn-login" onclick="showLoginModal()">Login</a>
+                    <a href="#" class="btn-register" onclick="showRegisterModal()">Register</a>
+                `;
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            checkAuthState(); // Update UI to show login/register buttons
+            window.location.href = '/';
+        }
+        
+        // Handle contact form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            loadJobs();
+            
+            // Handle contact form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    handleContactForm();
+                });
+            }
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offset = 100; // Increased offset for fixed navbar
+                        const targetPosition = target.offsetTop - offset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Scroll spy for active navigation highlighting
+            window.addEventListener('scroll', function() {
+                let current = '';
+                const sections = document.querySelectorAll('section[id]');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 120; // Increased offset for fixed navbar
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        function handleContactForm() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Show success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            successAlert.style.zIndex = '9999';
+            successAlert.innerHTML = `
+                <strong>Thank you, ${name}!</strong> Your message has been sent successfully. We'll get back to you soon.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(successAlert);
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 5000);
+        }
+    </script>
+    
+    <!-- About Section -->
+    <section id="about" class="about-section section-spacing bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">About AI Resume Screening</h2>
+                    <p class="lead">Welcome to the future of recruitment! Our AI-powered resume screening system revolutionizes how companies find the perfect candidates.</p>
+                    <p>We use advanced machine learning algorithms to analyze resumes, extract key information, and provide intelligent scoring to help recruiters make informed decisions quickly.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-robot text-primary"></i> AI-Powered Analysis</h5>
+                            <p>Advanced algorithms parse and analyze resumes with 95% accuracy.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-tachometer-alt text-success"></i> Instant Scoring</h5>
+                            <p>Get AI-generated scores for candidates in real-time.</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <h5><i class="fas fa-shield-alt text-info"></i> Secure Platform</h5>
+                            <p>Your data is protected with enterprise-grade security.</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <h5><i class="fas fa-chart-line text-warning"></i> Smart Analytics</h5>
+                            <p>Detailed insights and analytics for better hiring decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Why Choose Us?</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Save 80% of recruitment time</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Reduce bias in hiring process</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Find the best candidates faster</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Comprehensive resume analysis</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> 24/7 customer support</li>
+                            </ul>
+                            <button class="btn btn-primary btn-lg mt-3">Get Started Today</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-spacing">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h2 class="text-center mb-4">Get in Touch</h2>
+                            <p class="text-center text-muted mb-4">Have questions? We'd love to hear from you!</p>
+                            
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contactName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contactEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactSubject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="contactSubject" placeholder="Subject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactMessage" class="form-label">Message</label>
+                                    <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>AI Resume Screening</h5>
+                    <p>Revolutionizing recruitment with AI technology</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 AI Resume Screening. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

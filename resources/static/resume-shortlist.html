@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Shortlisting - AI Resume Screening</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0 60px 0;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .page-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .shortlist-section {
+            padding: 60px 0;
+        }
+        
+        .resume-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 5px solid #3498db;
+            position: relative;
+        }
+        
+        .resume-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .resume-card.shortlisted {
+            border-left-color: #27ae60;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+        }
+        
+        .score-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .score-high {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+        
+        .score-medium {
+            background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
+        }
+        
+        .score-low {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+        
+        .candidate-info {
+            margin-bottom: 20px;
+        }
+        
+        .candidate-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .candidate-email {
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .candidate-phone {
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+        
+        .skills-section {
+            margin-bottom: 20px;
+        }
+        
+        .skills-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 3px;
+        }
+        
+        .experience-section, .education-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-shortlist {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-shortlist:hover {
+            background: #2ecc71;
+        }
+        
+        .btn-reject {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-reject:hover {
+            background: #c0392b;
+        }
+        
+        .btn-view {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-view:hover {
+            background: #2980b9;
+        }
+        
+        .shortlisted-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .rejected-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #e74c3c;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background: #bdc3c7;
+        }
+        
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #7f8c8d;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+        
+        .shortlisted-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #27ae60;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain"></i> AI Resume Screening
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/jobs.html">Jobs</a>
+                <a class="nav-link active" href="/resume-upload.html">Resume Upload</a>
+                <a class="nav-link" href="/#about">About</a>
+            </div>
+            <div class="auth-buttons">
+                <span class="text-white me-3" id="welcomeUser">Welcome!</span>
+                <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Resume Shortlisting</h1>
+            <p class="page-subtitle">AI-powered resume analysis and candidate shortlisting</p>
+        </div>
+    </section>
+
+    <!-- Shortlist Section -->
+    <section class="shortlist-section">
+        <div class="container">
+            <!-- Statistics -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalResumes">0</div>
+                        <div class="stat-label">Total Resumes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="shortlistedCount">0</div>
+                        <div class="stat-label">Shortlisted</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="rejectedCount">0</div>
+                        <div class="stat-label">Rejected</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="pendingCount">0</div>
+                        <div class="stat-label">Pending Review</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h5><i class="fas fa-filter"></i> Filter Resumes</h5>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterResumes('all')">All Resumes</button>
+                    <button class="filter-btn" onclick="filterResumes('shortlisted')">Shortlisted</button>
+                    <button class="filter-btn" onclick="filterResumes('rejected')">Rejected</button>
+                    <button class="filter-btn" onclick="filterResumes('pending')">Pending Review</button>
+                    <button class="filter-btn" onclick="filterResumes('auto-shortlisted')">Auto-Shortlisted</button>
+                    <button class="filter-btn" onclick="filterResumes('auto-rejected')">Auto-Rejected</button>
+                    <button class="filter-btn" onclick="filterResumes('manual-shortlisted')">Manual Shortlisted</button>
+                    <button class="filter-btn" onclick="filterResumes('high-score')">High Score (80+)</button>
+                    <button class="filter-btn" onclick="filterResumes('medium-score')">Medium Score (60-79)</button>
+                    <button class="filter-btn" onclick="filterResumes('low-score')">Low Score (<60)</button>
+                </div>
+                <div class="mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle"></i> 
+                        <strong>Auto-Shortlisting:</strong> Resumes with score ≥ 80 are automatically shortlisted. 
+                        <strong>Auto-Rejection:</strong> Resumes with score < 60 are automatically rejected.
+                    </small>
+                </div>
+            </div>
+
+            <!-- Resumes List -->
+            <div id="resumesList">
+                <!-- Resumes will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let currentUser = null;
+        let allResumes = [];
+        let currentFilter = 'all';
+        
+        // Check authentication when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            
+            // Debug: Check existing resumes
+            const allResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+            console.log('=== DEBUG: Resume Shortlist Page ===');
+            console.log('Total resumes in localStorage:', allResumes.length);
+            
+            allResumes.forEach((resume, index) => {
+                console.log(`Resume ${index + 1}:`, {
+                    id: resume.id,
+                    userId: resume.userId,
+                    userName: resume.userName,
+                    fileName: resume.fileName,
+                    aiScore: resume.aiScore,
+                    isShortlisted: resume.isShortlisted,
+                    isRejected: resume.isRejected,
+                    autoShortlisted: resume.autoShortlisted,
+                    autoRejected: resume.autoRejected,
+                    uploadDate: resume.uploadDate
+                });
+            });
+            
+            // Count by status
+            const shortlisted = allResumes.filter(r => r.isShortlisted).length;
+            const rejected = allResumes.filter(r => r.isRejected === true).length;
+            const pending = allResumes.filter(r => !r.isShortlisted && r.isRejected !== true).length;
+            
+            console.log('Status Summary:', {
+                total: allResumes.length,
+                shortlisted: shortlisted,
+                rejected: rejected,
+                pending: pending
+            });
+            console.log('=== END DEBUG ===');
+            
+            loadResumes();
+        });
+        
+        // Check authentication state
+        function checkAuthState() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+                document.getElementById('welcomeUser').textContent = `Welcome, ${currentUser.username || 'User'}!`;
+            } else {
+                // Redirect to home page if not logged in
+                window.location.href = '/';
+            }
+        }
+        
+        // Load resumes from localStorage
+        function loadResumes() {
+            allResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+            console.log('Loaded resumes:', allResumes);
+            
+            // Update statistics
+            updateStatistics();
+            
+            // Display resumes
+            displayResumes();
+        }
+        
+        // Update statistics
+        function updateStatistics() {
+            const total = allResumes.length;
+            const shortlisted = allResumes.filter(r => r.isShortlisted).length;
+            const rejected = allResumes.filter(r => r.isRejected === true).length;
+            const pending = total - shortlisted - rejected;
+            
+            document.getElementById('totalResumes').textContent = total;
+            document.getElementById('shortlistedCount').textContent = shortlisted;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('pendingCount').textContent = pending;
+        }
+        
+        // Filter resumes
+        function filterResumes(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Display filtered resumes
+            displayResumes();
+        }
+        
+        // Display resumes
+        function displayResumes() {
+            const resumesList = document.getElementById('resumesList');
+            
+            let filteredResumes = allResumes;
+            
+            // Apply filter
+            switch(currentFilter) {
+                case 'shortlisted':
+                    filteredResumes = allResumes.filter(r => r.isShortlisted);
+                    break;
+                case 'rejected':
+                    filteredResumes = allResumes.filter(r => r.isRejected === true);
+                    break;
+                case 'pending':
+                    filteredResumes = allResumes.filter(r => !r.isShortlisted && r.isRejected !== true);
+                    break;
+                case 'auto-shortlisted':
+                    filteredResumes = allResumes.filter(r => r.autoShortlisted === true);
+                    break;
+                case 'auto-rejected':
+                    filteredResumes = allResumes.filter(r => r.autoRejected === true);
+                    break;
+                case 'manual-shortlisted':
+                    filteredResumes = allResumes.filter(r => r.isShortlisted === true && r.autoShortlisted !== true);
+                    break;
+                case 'high-score':
+                    filteredResumes = allResumes.filter(r => r.aiScore >= 80);
+                    break;
+                case 'medium-score':
+                    filteredResumes = allResumes.filter(r => r.aiScore >= 60 && r.aiScore < 80);
+                    break;
+                case 'low-score':
+                    filteredResumes = allResumes.filter(r => r.aiScore < 60);
+                    break;
+            }
+            
+            if (filteredResumes.length === 0) {
+                resumesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <h3>No resumes found</h3>
+                        <p>No resumes match the current filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by AI score (highest first)
+            filteredResumes.sort((a, b) => b.aiScore - a.aiScore);
+            
+            // Generate HTML for each resume
+            resumesList.innerHTML = filteredResumes.map(resume => createResumeCard(resume)).join('');
+        }
+        
+        // Create resume card HTML
+        function createResumeCard(resume) {
+            const scoreClass = resume.aiScore >= 80 ? 'score-high' : 
+                              resume.aiScore >= 60 ? 'score-medium' : 'score-low';
+            
+            const isShortlisted = resume.isShortlisted;
+            const isRejected = resume.isRejected === true;
+            const isAutoShortlisted = resume.autoShortlisted;
+            const isAutoRejected = resume.autoRejected;
+            
+            let statusBadge = '';
+            if (isShortlisted) {
+                statusBadge = `<div class="shortlisted-indicator">✓ ${isAutoShortlisted ? 'Auto-' : ''}Shortlisted</div>`;
+            } else if (isRejected) {
+                statusBadge = `<div class="rejected-indicator">✗ ${isAutoRejected ? 'Auto-' : ''}Rejected</div>`;
+            }
+            
+            return `
+                <div class="resume-card ${isShortlisted ? 'shortlisted' : ''}">
+                    ${statusBadge}
+                    <div class="score-badge ${scoreClass}">
+                        Score: ${resume.aiScore}/100
+                    </div>
+                    
+                    <div class="candidate-info">
+                        <div class="candidate-name">${resume.parsedData?.name || resume.userName || 'Unknown'}</div>
+                        <div class="candidate-email">
+                            <i class="fas fa-envelope"></i> ${resume.parsedData?.email || resume.userEmail || 'No email'}
+                        </div>
+                        <div class="candidate-phone">
+                            <i class="fas fa-phone"></i> ${resume.parsedData?.phone || 'No phone'}
+                        </div>
+                        <div class="text-muted small">
+                            <i class="fas fa-calendar"></i> Uploaded: ${new Date(resume.uploadDate).toLocaleDateString()}
+                        </div>
+                        ${isAutoShortlisted ? 
+                            `<div class="text-success small mt-1">
+                                <i class="fas fa-robot"></i> Auto-shortlisted on ${new Date(resume.shortlistedDate).toLocaleDateString()}
+                            </div>` : 
+                            isAutoRejected ? 
+                            `<div class="text-danger small mt-1">
+                                <i class="fas fa-robot"></i> Auto-rejected on ${new Date(resume.rejectedDate).toLocaleDateString()}
+                            </div>` : ''
+                        }
+                    </div>
+                    
+                    ${resume.parsedData?.skills ? `
+                        <div class="skills-section">
+                            <div class="skills-title">
+                                <i class="fas fa-tools"></i> Skills
+                            </div>
+                            <div>
+                                ${Array.isArray(resume.parsedData.skills) ? 
+                                    resume.parsedData.skills.map(skill => 
+                                        `<span class="skill-tag">${skill}</span>`
+                                    ).join('') :
+                                    typeof resume.parsedData.skills === 'string' ?
+                                        resume.parsedData.skills.split(',').map(skill => 
+                                            `<span class="skill-tag">${skill.trim()}</span>`
+                                        ).join('') : ''
+                                }
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    ${resume.parsedData?.experience ? `
+                        <div class="experience-section">
+                            <div class="section-title">
+                                <i class="fas fa-briefcase"></i> Experience
+                            </div>
+                            <div class="text-muted">${resume.parsedData.experience}</div>
+                        </div>
+                    ` : ''}
+                    
+                    ${resume.parsedData?.education ? `
+                        <div class="education-section">
+                            <div class="section-title">
+                                <i class="fas fa-graduation-cap"></i> Education
+                            </div>
+                            <div class="text-muted">${resume.parsedData.education}</div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="action-buttons">
+                        <button class="btn-view" onclick="viewResume(${resume.id})">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        ${!isShortlisted && !isRejected && !isAutoShortlisted && !isAutoRejected ? `
+                            <button class="btn-shortlist" onclick="shortlistResume(${resume.id})">
+                                <i class="fas fa-star"></i> Shortlist
+                            </button>
+                            <button class="btn-reject" onclick="rejectResume(${resume.id})">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                            <button class="btn-danger" onclick="deleteResume(${resume.id})" title="Delete this resume permanently">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        ` : ''}
+                        ${isShortlisted && !isAutoShortlisted ? `
+                            <button class="btn-reject" onclick="unshortlistResume(${resume.id})">
+                                <i class="fas fa-times"></i> Remove from Shortlist
+                            </button>
+                            <button class="btn-danger" onclick="deleteResume(${resume.id})" title="Delete this resume permanently">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        ` : ''}
+                        ${isRejected && !isAutoRejected ? `
+                            <button class="btn-shortlist" onclick="unrejectResume(${resume.id})">
+                                <i class="fas fa-undo"></i> Undo Rejection
+                            </button>
+                            <button class="btn-danger" onclick="deleteResume(${resume.id})" title="Delete this resume permanently">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        ` : ''}
+                        ${isAutoShortlisted ? `
+                            <button class="btn-reject" onclick="unshortlistResume(${resume.id})" title="Remove from auto-shortlist">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                            <button class="btn-danger" onclick="deleteResume(${resume.id})" title="Delete this resume permanently">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        ` : ''}
+                        ${isAutoRejected ? `
+                            <button class="btn-shortlist" onclick="unrejectResume(${resume.id})" title="Override auto-rejection">
+                                <i class="fas fa-undo"></i> Override
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Shortlist resume
+        function shortlistResume(resumeId) {
+            const resume = allResumes.find(r => r.id === resumeId);
+            if (resume) {
+                resume.isShortlisted = true;
+                resume.isRejected = false;
+                localStorage.setItem('uploadedResumes', JSON.stringify(allResumes));
+                
+                // Show success message
+                showNotification('Resume shortlisted successfully!', 'success');
+                
+                // Refresh display
+                updateStatistics();
+                displayResumes();
+            }
+        }
+        
+        // Reject resume
+        function rejectResume(resumeId) {
+            const resume = allResumes.find(r => r.id === resumeId);
+            if (resume) {
+                resume.isRejected = true;
+                resume.isShortlisted = false;
+                localStorage.setItem('uploadedResumes', JSON.stringify(allResumes));
+                
+                // Show success message
+                showNotification('Resume rejected!', 'warning');
+                
+                // Refresh display
+                updateStatistics();
+                displayResumes();
+            }
+        }
+        
+        // Unshortlist resume
+        function unshortlistResume(resumeId) {
+            const resume = allResumes.find(r => r.id === resumeId);
+            if (resume) {
+                resume.isShortlisted = false;
+                localStorage.setItem('uploadedResumes', JSON.stringify(allResumes));
+                
+                // Show success message
+                showNotification('Resume removed from shortlist!', 'info');
+                
+                // Refresh display
+                updateStatistics();
+                displayResumes();
+            }
+        }
+        
+        // Delete resume function
+        function deleteResume(resumeId) {
+            if (!confirm('Are you sure you want to delete this resume permanently? This action cannot be undone.')) {
+                return;
+            }
+            
+            console.log('=== DEBUG: Deleting Resume from Shortlist ===');
+            console.log('Resume ID to delete:', resumeId);
+            
+            try {
+                // Get current user
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const userId = user.id || 'user_' + Date.now();
+                
+                // Get all resumes from localStorage
+                const allResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+                console.log('Total resumes before deletion:', allResumes.length);
+                
+                // Find the resume to delete
+                const resumeToDelete = allResumes.find(resume => resume.id === resumeId);
+                if (!resumeToDelete) {
+                    console.error('Resume not found:', resumeId);
+                    showNotification('Resume not found!', 'error');
+                    return;
+                }
+                
+                // Check if user owns this resume
+                if (resumeToDelete.userId !== userId) {
+                    console.error('User does not own this resume:', resumeToDelete.userId, 'Current user:', userId);
+                    showNotification('You can only delete your own resume!', 'error');
+                    return;
+                }
+                
+                console.log('Deleting resume:', resumeToDelete.fileName);
+                
+                // Filter out the resume to delete
+                const filteredResumes = allResumes.filter(resume => resume.id !== resumeId);
+                
+                // Update localStorage
+                localStorage.setItem('uploadedResumes', JSON.stringify(filteredResumes));
+                console.log('Total resumes after deletion:', filteredResumes.length);
+                
+                // Show success message
+                showNotification('Resume deleted successfully!', 'success');
+                
+                // Reload resumes list
+                loadResumes();
+                
+                console.log('=== END DEBUG: Resume Deleted ===');
+                
+            } catch (error) {
+                console.error('Error deleting resume:', error);
+                showNotification('Error deleting resume. Please try again.', 'error');
+            }
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = `
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'}"></i>
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // Add to page
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Unreject resume
+        function unrejectResume(resumeId) {
+            const resume = allResumes.find(r => r.id === resumeId);
+            if (resume) {
+                resume.isRejected = false;
+                localStorage.setItem('uploadedResumes', JSON.stringify(allResumes));
+                
+                // Show success message
+                showNotification('Rejection undone!', 'info');
+                
+                // Refresh display
+                updateStatistics();
+                displayResumes();
+            }
+        }
+        
+        // View resume details
+        function viewResume(resumeId) {
+            const resume = allResumes.find(r => r.id === resumeId);
+            if (resume) {
+                alert(`Resume Details:\n\nName: ${resume.parsedData?.name || resume.userName}\nEmail: ${resume.parsedData?.email || resume.userEmail}\nPhone: ${resume.parsedData?.phone}\nScore: ${resume.aiScore}/100\nSkills: ${resume.parsedData?.skills?.join(', ') || 'N/A'}\nExperience: ${resume.parsedData?.experience || 'N/A'}\nEducation: ${resume.parsedData?.education || 'N/A'}`);
+            }
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
+        
+        .candidate-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .candidate-contact {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .skills-section {
+            margin-bottom: 20px;
+        }
+        
+        .skill-tag {
+            display: inline-block;
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 3px;
+            font-weight: 500;
+        }
+        
+        .skill-high-demand {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .experience-section, .education-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .experience-item, .education-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-shortlist {
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-shortlist:hover {
+            background: #2ecc71;
+        }
+        
+        .btn-view {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-view:hover {
+            background: #2980b9;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .no-resumes {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+        
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .score-filter {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .filter-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 8px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-brain"></i> AI Resume Screening
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/jobs.html">Jobs</a>
+                <a class="nav-link active" href="/resume-shortlist.html">Resume Shortlist</a>
+                <a class="nav-link" href="/#about">About</a>
+            </div>
+            <div class="auth-buttons">
+                <span class="text-white me-3" id="welcomeUser">Welcome!</span>
+                <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">AI Resume Shortlisting</h1>
+            <p class="page-subtitle">Intelligent resume ranking and candidate selection</p>
+        </div>
+    </section>
+
+    <!-- Shortlist Section -->
+    <section class="shortlist-section">
+        <div class="container">
+            <div class="row">
+                <!-- Filters Sidebar -->
+                <div class="col-md-3">
+                    <div class="filter-section">
+                        <h5><i class="fas fa-filter"></i> Filters</h5>
+                        
+                        <div class="score-filter">
+                            <label>Score Range:</label>
+                            <select class="form-select" id="scoreFilter" onchange="filterResumes()">
+                                <option value="all">All Scores</option>
+                                <option value="high">High (80+)</option>
+                                <option value="medium">Medium (50-79)</option>
+                                <option value="low">Low (0-49)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="filter-btn active" onclick="showAllResumes()">All Resumes</button>
+                            <button class="filter-btn" onclick="showShortlisted()">Shortlisted</button>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-section">
+                        <h5><i class="fas fa-chart-bar"></i> Statistics</h5>
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalResumes">0</div>
+                            <div class="stat-label">Total Resumes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="avgScore">0</div>
+                            <div class="stat-label">Average Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="highScoreCount">0</div>
+                            <div class="stat-label">High Scoring</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumes List -->
+                <div class="col-md-9">
+                    <div id="resumesContainer">
+                        <div class="loading-spinner">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-3">Loading resumes...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let allResumes = [];
+        let filteredResumes = [];
+        let currentUser = null;
+        
+        // Load resumes when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            loadResumes();
+        });
+        
+        // Check authentication state
+        function checkAuthState() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+                document.getElementById('welcomeUser').textContent = `Welcome, ${currentUser.username || 'User'}!`;
+            } else {
+                window.location.href = '/';
+            }
+        }
+        
+        // Load all resumes for shortlisting
+        async function loadResumes() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/resumes/shortlist', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                allResumes = data.resumes;
+                filteredResumes = [...allResumes];
+                
+                console.log('Loaded resumes:', allResumes.length);
+                displayResumes(filteredResumes);
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Error loading resumes:', error);
+                showError('Failed to load resumes. Please try again.');
+            }
+        }
+        
+        // Display resumes
+        function displayResumes(resumes) {
+            const container = document.getElementById('resumesContainer');
+            
+            if (resumes.length === 0) {
+                container.innerHTML = `
+                    <div class="no-resumes">
+                        <i class="fas fa-file-alt fa-3x mb-3"></i>
+                        <h3>No resumes found</h3>
+                        <p>Upload some resumes to see them here</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            resumes.forEach(resume => {
+                html += createResumeCard(resume);
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Create resume card HTML
+        function createResumeCard(resume) {
+            const score = resume.score || 0;
+            const scoreClass = score >= 80 ? 'score-high' : score >= 50 ? 'score-medium' : 'score-low';
+            
+            return `
+                <div class="resume-card position-relative">
+                    <div class="score-badge ${scoreClass}">
+                        <i class="fas fa-star"></i> ${score.toFixed(0)}
+                    </div>
+                    
+                    <div class="candidate-info">
+                        <div class="candidate-name">${resume.name || 'Unknown Candidate'}</div>
+                        <div class="candidate-contact">
+                            <i class="fas fa-envelope"></i> ${resume.email || 'N/A'} | 
+                            <i class="fas fa-phone"></i> ${resume.phone || 'N/A'}
+                        </div>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <div class="section-title"><i class="fas fa-tools"></i> Skills</div>
+                        ${createSkillsHtml(resume.skills || [])}
+                    </div>
+                    
+                    <div class="experience-section">
+                        <div class="section-title"><i class="fas fa-briefcase"></i> Experience</div>
+                        ${createExperienceHtml(resume.experience || [])}
+                    </div>
+                    
+                    <div class="education-section">
+                        <div class="section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                        ${createEducationHtml(resume.education || [])}
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-shortlist" onclick="shortlistResume(${resume.id})">
+                            <i class="fas fa-check"></i> Shortlist
+                        </button>
+                        <button class="btn-view" onclick="viewResume(${resume.id})">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Create skills HTML
+        function createSkillsHtml(skills) {
+            const highDemandSkills = ['java', 'python', 'javascript', 'react', 'spring', 
+                                   'aws', 'docker', 'kubernetes', 'sql', 'machine learning'];
+            
+            return skills.map(skill => {
+                const isHighDemand = highDemandSkills.includes(skill.toLowerCase());
+                const className = isHighDemand ? 'skill-tag skill-high-demand' : 'skill-tag';
+                return `<span class="${className}">${skill}</span>`;
+            }).join('');
+        }
+        
+        // Create experience HTML
+        function createExperienceHtml(experience) {
+            if (experience.length === 0) {
+                return '<div class="experience-item">No experience details found</div>';
+            }
+            
+            return experience.slice(0, 2).map(exp => 
+                `<div class="experience-item">
+                    <strong>${exp.title || 'Position'}</strong> at ${exp.company || 'Company'}
+                    ${exp.duration ? `(${exp.duration})` : ''}
+                </div>`
+            ).join('');
+        }
+        
+        // Create education HTML
+        function createEducationHtml(education) {
+            if (education.length === 0) {
+                return '<div class="education-item">No education details found</div>';
+            }
+            
+            return education.slice(0, 2).map(edu => 
+                `<div class="education-item">
+                    <strong>${edu.degree || 'Degree'}</strong> from ${edu.institution || 'Institution'}
+                    ${edu.year ? `(${edu.year})` : ''}
+                </div>`
+            ).join('');
+        }
+        
+        // Filter resumes by score
+        function filterResumes() {
+            const scoreFilter = document.getElementById('scoreFilter').value;
+            
+            if (scoreFilter === 'all') {
+                filteredResumes = [...allResumes];
+            } else if (scoreFilter === 'high') {
+                filteredResumes = allResumes.filter(r => r.score >= 80);
+            } else if (scoreFilter === 'medium') {
+                filteredResumes = allResumes.filter(r => r.score >= 50 && r.score < 80);
+            } else if (scoreFilter === 'low') {
+                filteredResumes = allResumes.filter(r => r.score < 50);
+            }
+            
+            displayResumes(filteredResumes);
+            updateStatistics();
+        }
+        
+        // Show all resumes
+        function showAllResumes() {
+            filteredResumes = [...allResumes];
+            displayResumes(filteredResumes);
+            updateStatistics();
+        }
+        
+        // Show shortlisted resumes
+        async function showShortlisted() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('/api/resumes/shortlisted', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                filteredResumes = data.resumes;
+                displayResumes(filteredResumes);
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Error loading shortlisted resumes:', error);
+                showError('Failed to load shortlisted resumes');
+            }
+        }
+        
+        // Shortlist a resume
+        async function shortlistResume(resumeId) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/resumes/shortlist/${resumeId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                alert(`Resume shortlisted successfully!\n\nFile: ${result.fileName}\nBy: ${result.shortlistedBy}`);
+                
+            } catch (error) {
+                console.error('Error shortlisting resume:', error);
+                showError('Failed to shortlist resume');
+            }
+        }
+        
+        // View resume details
+        function viewResume(resumeId) {
+            alert(`Viewing detailed information for Resume ID: ${resumeId}\n\nThis would open a detailed view page with full resume information.`);
+        }
+        
+        // Update statistics
+        function updateStatistics() {
+            const total = filteredResumes.length;
+            const avgScore = total > 0 ? 
+                (filteredResumes.reduce((sum, r) => sum + (r.score || 0), 0) / total).toFixed(1) : 0;
+            const highScoreCount = filteredResumes.filter(r => r.score >= 80).length;
+            
+            document.getElementById('totalResumes').textContent = total;
+            document.getElementById('avgScore').textContent = avgScore;
+            document.getElementById('highScoreCount').textContent = highScoreCount;
+        }
+        
+        // Show error message
+        function showError(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-danger alert-dismissible fade show';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.querySelector('.container').prepend(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

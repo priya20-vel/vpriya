@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard - JobPortal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .nav-link.active {
+            color: #3498db !important;
+            font-weight: bold;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0 60px 0;
+            text-align: center;
+        }
+        
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .company-info {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .company-logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 15px;
+            background: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .company-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .company-location {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .applications-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        
+        .application-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            transition: transform 0.3s;
+        }
+        
+        .application-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .applicant-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .applied-position {
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .applied-date {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .applicant-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .detail-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .detail-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-view-resume {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-view-resume:hover {
+            background: #2980b9;
+        }
+        
+        .btn-shortlist {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-shortlist:hover {
+            background: #229954;
+        }
+        
+        .btn-reject {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-reject:hover {
+            background: #c0392b;
+        }
+        
+        .shortlisted-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .shortlisted-card {
+            background: #d4edda;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .rejected-card {
+            background: #f8d7da;
+            border-left: 4px solid #e74c3c;
+            opacity: 0.7;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+        
+        .filter-tab {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #7f8c8d;
+            transition: color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .filter-tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .filter-tab:hover {
+            color: #3498db;
+        }
+        
+        .welcome-text {
+            color: white;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .auth-welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-spacing {
+            padding: 4rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase"></i> JobPortal
+            </a>
+            <div class="navbar-nav ms-auto d-flex align-items-center">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/jobs.html">Jobs</a>
+                <a class="nav-link" href="/resume-upload.html">Upload Resume</a>
+                <a class="nav-link" href="/resume-shortlist.html">Resume Shortlist</a>
+                <a class="nav-link active" href="/company-dashboard.html">Company Dashboard</a>
+                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link" href="#contact">Contact</a>
+            </div>
+            <div class="auth-buttons d-flex align-items-center">
+                <a href="#" class="btn-login" onclick="showLoginModal()">Login</a>
+                <a href="#" class="btn-register" onclick="showRegisterModal()">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="container">
+            <h1 class="dashboard-title">Company Dashboard</h1>
+            <p class="dashboard-subtitle">Manage your job postings and review applications</p>
+        </div>
+    </section>
+
+    <!-- Company Info Section -->
+    <section class="section-spacing">
+        <div class="container">
+            <div class="company-info">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <div class="company-logo">
+                            <i class="fas fa-building"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <h2 class="company-name" id="companyName">Tech Solutions Inc.</h2>
+                        <div class="company-location">
+                            <i class="fas fa-map-marker-alt"></i> <span id="companyLocation">Chennai, Tamil Nadu</span>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="detail-item">
+                                    <div class="detail-label">Industry</div>
+                                    <div class="detail-value" id="companyIndustry">Information Technology</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="detail-item">
+                                    <div class="detail-label">Company Size</div>
+                                    <div class="detail-value" id="companySize">500-1000 Employees</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="detail-item">
+                                    <div class="detail-label">Founded</div>
+                                    <div class="detail-value" id="companyFounded">2010</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="section-spacing">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalApplications">0</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="shortlistedCount">0</div>
+                    <div class="stat-label">Shortlisted</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeJobs">0</div>
+                    <div class="stat-label">Active Jobs</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="section-spacing">
+        <div class="container">
+            <div class="applications-section">
+                <h2 class="section-title">Job Applications</h2>
+                
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterApplications('all')">All Applications</button>
+                    <button class="filter-tab" onclick="filterApplications('pending')">Pending</button>
+                    <button class="filter-tab" onclick="filterApplications('shortlisted')">Shortlisted</button>
+                    <button class="filter-tab" onclick="filterApplications('rejected')">Rejected</button>
+                </div>
+                
+                <div id="applicationsList">
+                    <!-- Applications will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Sample applications data
+        let applications = [
+            {
+                id: 1,
+                applicantName: "Priya Sharma",
+                position: "Senior Java Developer",
+                email: "priya.sharma@email.com",
+                phone: "+91-9876543210",
+                experience: "5 years",
+                skills: "Java, Spring, MySQL, AWS",
+                education: "B.Tech Computer Science",
+                appliedDate: "2024-02-27",
+                status: "pending",
+                resumeScore: 85,
+                company: "Tech Solutions Inc."
+            },
+            {
+                id: 2,
+                applicantName: "Rahul Kumar",
+                position: "Frontend Developer",
+                email: "rahul.kumar@email.com",
+                phone: "+91-8765432109",
+                experience: "3 years",
+                skills: "React, JavaScript, CSS, HTML",
+                education: "B.Sc Computer Science",
+                appliedDate: "2024-02-26",
+                status: "shortlisted",
+                resumeScore: 78,
+                company: "Tech Solutions Inc."
+            },
+            {
+                id: 3,
+                applicantName: "Anjali Nair",
+                position: "Python Data Scientist",
+                email: "anjali.nair@email.com",
+                phone: "+91-7654321098",
+                experience: "4 years",
+                skills: "Python, Machine Learning, Data Analysis",
+                education: "M.Sc Data Science",
+                appliedDate: "2024-02-25",
+                status: "rejected",
+                resumeScore: 65,
+                company: "Tech Solutions Inc."
+            }
+        ];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            loadCompanyInfo();
+            loadApplicationsFromStorage();
+            updateStatistics();
+        });
+
+        function loadApplicationsFromStorage() {
+            // Load uploaded resumes from localStorage (only shortlisted ones)
+            const uploadedResumes = JSON.parse(localStorage.getItem('uploadedResumes') || '[]');
+            
+            // Load job applications from localStorage
+            const jobApplications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+            
+            // Get company name
+            const companyName = document.getElementById('companyName').textContent;
+            
+            // Filter only shortlisted resumes
+            const shortlistedResumes = uploadedResumes.filter(resume => resume.isShortlisted === true);
+            
+            // Filter job applications for this company
+            const companyApplications = jobApplications.filter(app => app.company === companyName);
+            
+            // Combine both data sources - prioritize shortlisted resumes
+            let allApplications = [];
+            
+            // Add shortlisted resumes first (these are AI-qualified candidates)
+            shortlistedResumes.forEach(resume => {
+                allApplications.push({
+                    id: resume.id,
+                    applicantName: resume.parsedData?.name || resume.userName,
+                    applicantEmail: resume.parsedData?.email || resume.userEmail,
+                    applicantPhone: resume.parsedData?.phone || 'Not provided',
+                    position: 'Open Positions',
+                    company: companyName,
+                    appliedDate: resume.uploadDate.split('T')[0],
+                    status: 'shortlisted',
+                    type: 'resume_upload',
+                    userId: resume.userId,
+                    experience: resume.parsedData?.experience || 'Not specified',
+                    skills: Array.isArray(resume.parsedData?.skills) ? resume.parsedData.skills.join(', ') : resume.parsedData?.skills || 'Not specified',
+                    qualification: resume.parsedData?.education || 'Not specified',
+                    fieldOfStudy: 'Not specified',
+                    currentCompany: 'Not specified',
+                    expectedSalary: 'Not specified',
+                    noticePeriod: 'Not specified',
+                    coverLetter: 'AI shortlisted based on resume analysis',
+                    resumeFile: resume.fileName,
+                    aiScore: resume.aiScore,
+                    autoShortlisted: resume.autoShortlisted,
+                    shortlistedDate: resume.shortlistedDate
+                });
+            });
+            
+            // Add job applications (only if not already shortlisted via resume)
+            companyApplications.forEach(app => {
+                // Check if this user is already in shortlisted resumes
+                const isAlreadyShortlisted = shortlistedResumes.some(resume => resume.userId === app.userId);
+                
+                if (!isAlreadyShortlisted) {
+                    allApplications.push({
+                        id: app.id,
+                        applicantName: app.applicantName,
+                        applicantEmail: app.applicantEmail,
+                        applicantPhone: app.applicantPhone,
+                        position: app.jobTitle,
+                        company: app.company,
+                        appliedDate: app.appliedDate,
+                        status: app.status,
+                        type: 'job_application',
+                        userId: app.userId,
+                        experience: app.experience || 'Not specified',
+                        skills: app.skills || 'Not specified',
+                        qualification: app.qualification || 'Not specified',
+                        fieldOfStudy: app.fieldOfStudy || 'Not specified',
+                        currentCompany: app.currentCompany || 'Not specified',
+                        expectedSalary: app.expectedSalary || 'Not specified',
+                        noticePeriod: app.noticePeriod || 'Not specified',
+                        coverLetter: app.coverLetter || 'Not specified',
+                        resumeFile: app.resumeFile || 'Not uploaded'
+                    });
+                }
+            });
+            
+            // Sort by applied date (newest first)
+            allApplications.sort((a, b) => new Date(b.appliedDate) - new Date(a.appliedDate));
+            
+            // Store globally
+            applications = allApplications;
+            
+            // Display applications
+            loadApplications();
+            updateStatistics();
+        }
+
+        function checkAuthState() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <div class="auth-welcome">
+                        <span class="welcome-text">Welcome, ${user.username || 'User'}!</span>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            checkAuthState();
+            alert('Logged out successfully!');
+            window.location.href = '/';
+        }
+
+        function loadCompanyInfo() {
+            // Get company from URL parameter or default
+            const urlParams = new URLSearchParams(window.location.search);
+            const companyName = urlParams.get('company') || 'Tech Solutions Inc.';
+            
+            // Update company info based on company name
+            const companyData = {
+                'Tech Solutions Inc.': {
+                    location: 'Chennai, Tamil Nadu',
+                    industry: 'Information Technology',
+                    size: '500-1000 Employees',
+                    founded: '2010'
+                },
+                'Data Analytics Pro': {
+                    location: 'Bangalore, Karnataka',
+                    industry: 'Data Analytics',
+                    size: '100-500 Employees',
+                    founded: '2015'
+                },
+                'Web Innovations Ltd': {
+                    location: 'Mumbai, Maharashtra',
+                    industry: 'Web Development',
+                    size: '50-100 Employees',
+                    founded: '2018'
+                }
+            };
+            
+            const data = companyData[companyName] || companyData['Tech Solutions Inc.'];
+            
+            document.getElementById('companyName').textContent = companyName;
+            document.getElementById('companyLocation').textContent = data.location;
+            document.getElementById('companyIndustry').textContent = data.industry;
+            document.getElementById('companySize').textContent = data.size;
+            document.getElementById('companyFounded').textContent = data.founded;
+        }
+
+        function loadApplications() {
+            const applicationsList = document.getElementById('applicationsList');
+            applicationsList.innerHTML = '';
+            
+            applications.forEach(app => {
+                const applicationCard = createApplicationCard(app);
+                applicationsList.innerHTML += applicationCard;
+            });
+        }
+
+        function createApplicationCard(application) {
+            const statusClass = application.status === 'shortlisted' ? 'shortlisted-card' : 
+                               application.status === 'rejected' ? 'rejected-card' : '';
+            
+            const statusBadge = application.status === 'shortlisted' ? 
+                '<span class="badge bg-success">Shortlisted</span>' :
+                application.status === 'rejected' ? 
+                '<span class="badge bg-danger">Rejected</span>' :
+                '<span class="badge bg-warning">Pending</span>';
+            
+            // AI Score display
+            let aiScoreDisplay = '';
+            if (application.aiScore) {
+                const scoreClass = application.aiScore >= 80 ? 'text-success' : 
+                                  application.aiScore >= 60 ? 'text-warning' : 'text-danger';
+                aiScoreDisplay = `
+                    <div class="mt-2">
+                        <small class="${scoreClass}">
+                            <i class="fas fa-robot"></i> AI Score: ${application.aiScore}/100
+                            ${application.autoShortlisted ? ' (Auto)' : ''}
+                        </small>
+                    </div>
+                `;
+            } else {
+                aiScoreDisplay = `
+                    <div class="mt-2">
+                        <small class="text-muted">No AI Score</small>
+                    </div>
+                `;
+            }
+            
+            // Type indicator
+            let typeIndicator = '';
+            if (application.type === 'resume_upload') {
+                typeIndicator = '<span class="badge bg-info ms-2">Resume Upload</span>';
+            } else if (application.type === 'job_application') {
+                typeIndicator = '<span class="badge bg-secondary ms-2">Job Application</span>';
+            }
+            
+            return `
+                <div class="application-card ${statusClass}" data-status="${application.status}">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <div class="applicant-name">${application.applicantName}</div>
+                            <div class="applied-position">${application.position} ${typeIndicator}</div>
+                            <div class="applied-date">
+                                <i class="fas fa-calendar"></i> Applied on ${new Date(application.appliedDate).toLocaleDateString()}
+                            </div>
+                            ${application.shortlistedDate ? 
+                                `<div class="text-success small mt-1">
+                                    <i class="fas fa-star"></i> Shortlisted on ${new Date(application.shortlistedDate).toLocaleDateString()}
+                                </div>` : ''
+                            }
+                        </div>
+                        <div class="text-end">
+                            ${statusBadge}
+                            ${aiScoreDisplay}
+                        </div>
+                    </div>
+                    
+                    <div class="applicant-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value">${application.applicantEmail}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value">${application.applicantPhone}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Experience</div>
+                            <div class="detail-value">${application.experience}</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Education</div>
+                            <div class="detail-value">${application.qualification}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <strong>Skills:</strong> ${application.skills}
+                    </div>
+                    
+                    ${application.coverLetter ? `
+                        <div class="mt-3">
+                            <strong>Cover Letter:</strong> 
+                            <div class="text-muted small">${application.coverLetter}</div>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="action-buttons mt-3">
+                        <button class="btn-view-resume" onclick="viewResume(${application.id})">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        ${application.status !== 'shortlisted' ? `
+                            <button class="btn-shortlist" onclick="shortlistApplication(${application.id})">
+                                <i class="fas fa-star"></i> Shortlist
+                            </button>
+                        ` : ''}
+                        ${application.status !== 'rejected' ? `
+                            <button class="btn-reject" onclick="rejectApplication(${application.id})">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function filterApplications(status) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter applications
+            const applicationsList = document.getElementById('applicationsList');
+            applicationsList.innerHTML = '';
+            
+            const filteredApplications = status === 'all' ? applications : 
+                                         applications.filter(app => app.status === status);
+            
+            filteredApplications.forEach(app => {
+                const applicationCard = createApplicationCard(app);
+                applicationsList.innerHTML += applicationCard;
+            });
+        }
+
+        function updateStatistics() {
+            const totalApps = applications.length;
+            const shortlisted = applications.filter(app => app.status === 'shortlisted').length;
+            const rejected = applications.filter(app => app.status === 'rejected').length;
+            const activeJobs = 5; // Sample number
+            
+            document.getElementById('totalApplications').textContent = totalApps;
+            document.getElementById('shortlistedCount').textContent = shortlisted;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('activeJobs').textContent = activeJobs;
+        }
+
+        function viewResume(applicationId) {
+            const application = applications.find(app => app.id === applicationId);
+            alert(`Viewing resume for ${application.applicantName}\n\nThis would open the full resume viewer with:\n- Complete work experience\n- Education details\n- Skills assessment\n- AI score breakdown\n- Download option`);
+        }
+
+        function shortlistApplication(applicationId) {
+            const application = applications.find(app => app.id === applicationId);
+            application.status = 'shortlisted';
+            
+            // Show success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            successAlert.style.zIndex = '9999';
+            successAlert.innerHTML = `
+                <strong>Application Shortlisted!</strong> ${application.applicantName} has been shortlisted for ${application.position}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(successAlert);
+            
+            // Remove alert after 3 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 3000);
+            
+            // Reload applications
+            loadApplications();
+            updateStatistics();
+        }
+
+        function rejectApplication(applicationId) {
+            const application = applications.find(app => app.id === applicationId);
+            
+            const confirmReject = confirm(`Are you sure you want to reject ${application.applicantName} for ${application.position}?`);
+            
+            if (confirmReject) {
+                application.status = 'rejected';
+                
+                // Update localStorage
+                const storedApplications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+                const storedApp = storedApplications.find(app => app.id === applicationId);
+                if (storedApp) {
+                    storedApp.status = 'rejected';
+                    localStorage.setItem('jobApplications', JSON.stringify(storedApplications));
+                }
+                
+                // Show success message
+                const successAlert = document.createElement('div');
+                successAlert.className = 'alert alert-warning alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+                successAlert.style.zIndex = '9999';
+                successAlert.innerHTML = `
+                    <strong>Application Rejected!</strong> ${application.applicantName} has been rejected.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `;
+                document.body.appendChild(successAlert);
+                
+                // Remove alert after 3 seconds
+                setTimeout(() => {
+                    successAlert.remove();
+                }, 3000);
+                
+                // Reload applications
+                loadApplications();
+                updateStatistics();
+            }
+        }
+        
+        // Auto-refresh applications every 30 seconds to check for new applications
+        setInterval(() => {
+            loadApplicationsFromStorage();
+            updateStatistics();
+        }, 30000);
+        
+        // Listen for storage changes (for real-time updates when applications are submitted)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'jobApplications') {
+                loadApplicationsFromStorage();
+                updateStatistics();
+                
+                // Show notification for new application
+                const newApplications = JSON.parse(e.newValue || '[]');
+                const companyName = document.getElementById('companyName').textContent;
+                const companyNewApps = newApplications.filter(app => app.company === companyName);
+                
+                if (companyNewApps.length > 0) {
+                    const latestApp = companyNewApps[companyNewApps.length - 1];
+                    showNewApplicationNotification(latestApp);
+                }
+            }
+        });
+        
+        function showNewApplicationNotification(application) {
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-info alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                <strong>New Application!</strong> ${application.applicantName} applied for ${application.position}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(notification);
+            
+            // Remove notification after 5 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

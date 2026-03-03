@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Portal - Find Your Dream Job</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: #2c3e50;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #fff !important;
+        }
+        
+        .nav-link {
+            color: #fff !important;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: #3498db !important;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-top: 80px; /* Add margin for fixed navbar */
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .search-box {
+            background: white;
+            border-radius: 50px;
+            padding: 15px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+        
+        .search-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .search-btn:hover {
+            background: #2980b9;
+        }
+        
+        .category-section {
+            padding: 60px 0;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 100%;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #3498db;
+        }
+        
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .category-count {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .jobs-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+        
+        .job-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+        
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #3498db;
+            margin-right: 20px;
+        }
+        
+        .job-info h4 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .job-info .company-name {
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .job-info .location {
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .job-meta span {
+            background: #ecf0f1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #2c3e50;
+        }
+        
+        .salary {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .auth-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .btn-login, .btn-register {
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-right: 10px;
+        }
+        
+        .btn-login:hover {
+            background: white;
+            color: #2c3e50;
+        }
+        
+        .btn-register {
+            background: white;
+            color: #2c3e50;
+            border: 2px solid white;
+        }
+        
+        .btn-register:hover {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        .view-all-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .view-all-btn:hover {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-4 {
+            margin-top: 2rem;
+        }
+        
+        .section-spacing {
+            padding: 4rem 0;
+        }
+        
+        .hero-section {
+            padding-bottom: 4rem;
+        }
+        
+        .category-section {
+            padding: 4rem 0;
+        }
+        
+        .jobs-section {
+            padding: 4rem 0;
+        }
+        
+        .about-section {
+            padding: 4rem 0;
+        }
+        
+        .contact-section {
+            padding: 4rem 0;
+        }
+        
+        .navbar-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .nav-link.active {
+            color: #3498db !important;
+            font-weight: bold;
+        }
+        
+        .auth-welcome {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .welcome-text {
+            color: white;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+        
+        .job-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .job-actions .btn {
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+        
+        .job-actions .btn-outline-primary {
+            border-color: #3498db;
+            color: #3498db;
+        }
+        
+        .job-actions .btn-outline-primary:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .job-actions .btn-primary {
+            background: #3498db;
+            border-color: #3498db;
+        }
+        
+        .job-actions .btn-primary:hover {
+            background: #2980b9;
+            border-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-briefcase"></i> JobPortal
+            </a>
+            <div class="navbar-nav ms-auto d-flex align-items-center">
+                <a class="nav-link" href="#jobs">Jobs</a>
+                <a class="nav-link" href="#categories">Categories</a>
+                <a class="nav-link" href="/resume-upload.html">Upload Resume</a>
+                <a class="nav-link" href="/resume-shortlist.html">Resume Shortlist</a>
+                <a class="nav-link" href="#about">About</a>
+                <a class="nav-link" href="#contact">Contact</a>
+            </div>
+            <div class="auth-buttons d-flex align-items-center">
+                <a href="#" class="btn-login" onclick="showLoginModal()">Login</a>
+                <a href="#" class="btn-register" onclick="showRegisterModal()">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Find Your Dream Job</h1>
+            <p class="hero-subtitle">Discover opportunities that match your skills and aspirations</p>
+            
+            <div class="search-box">
+                <div class="d-flex align-items-center">
+                    <input type="text" class="search-input" placeholder="Search for jobs, companies, or keywords..." id="searchInput">
+                    <button class="search-btn" onclick="searchJobs()">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="category-section section-spacing" id="categories">
+        <div class="container">
+            <h2 class="section-title">Popular Categories</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="category-card" onclick="filterByCategory('IT')">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="category-title">Information Technology</div>
+                        <div class="category-count">1,234 Jobs</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="category-card" onclick="filterByCategory('Healthcare')">
+                        <div class="category-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="category-title">Healthcare</div>
+                        <div class="category-count">856 Jobs</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="category-card" onclick="filterByCategory('Finance')">
+                        <div class="category-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="category-title">Finance</div>
+                        <div class="category-count">642 Jobs</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="category-card" onclick="filterByCategory('Education')">
+                        <div class="category-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="category-title">Education</div>
+                        <div class="category-count">423 Jobs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs Section -->
+    <section class="jobs-section section-spacing" id="jobs">
+        <div class="container">
+            <h2 class="section-title">Featured Jobs</h2>
+            <div id="jobsList">
+                <!-- Jobs will be loaded here from API -->
+            </div>
+            <div class="text-center mt-4">
+                <a href="/jobs.html" class="view-all-btn">View All Jobs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginUsername" class="form-label">Username or Email</label>
+                            <input type="text" class="form-control" id="loginUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-center w-100">
+                        Don't have an account? 
+                        <a href="#" onclick="showRegisterModal()">Register here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="registerUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="registerUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerFullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="registerFullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <p class="text-center w-100">
+                        Already have an account? 
+                        <a href="#" onclick="showLoginModal()">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Modal functions
+        function showLoginModal() {
+            const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+            if (registerModal) registerModal.hide();
+            
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        }
+        
+        function showRegisterModal() {
+            const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+            if (loginModal) loginModal.hide();
+            
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+            registerModal.show();
+        }
+        
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Store token
+                    localStorage.setItem('token', result.token);
+                    localStorage.setItem('user', JSON.stringify(result.user));
+                    
+                    // Close modal and show success
+                    const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    loginModal.hide();
+                    
+                    alert('Login successful! Welcome ' + result.user.username);
+                    
+                    // Update UI to show logged in state
+                    checkAuthState();
+                    
+                    // Reload jobs to show full functionality
+                    loadJobs();
+                } else {
+                    alert('Login failed: ' + (result.error || 'Invalid credentials'));
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed. Please try again.');
+            }
+        });
+        
+        // Register functionality
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const userData = {
+                username: document.getElementById('registerUsername').value,
+                email: document.getElementById('registerEmail').value,
+                fullName: document.getElementById('registerFullName').value,
+                password: document.getElementById('registerPassword').value
+            };
+            
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    // Close register modal
+                    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    registerModal.hide();
+                    
+                    alert('Registration successful! Please login with your credentials.');
+                    
+                    // Show login modal
+                    showLoginModal();
+                    
+                    // Pre-fill login form
+                    document.getElementById('loginUsername').value = userData.username;
+                } else {
+                    alert('Registration failed: ' + (result.error || 'Please try again'));
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                alert('Registration failed. Please try again.');
+            }
+        });
+        
+        // Update auth UI based on login state
+        function checkAuthState() {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (token) {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <div class="auth-welcome">
+                        <span class="welcome-text">Welcome, ${user.username || 'User'}!</span>
+                        <a href="#" class="btn btn-danger btn-sm" onclick="logout()">Logout</a>
+                    </div>
+                `;
+            } else {
+                const authButtons = document.querySelector('.auth-buttons');
+                authButtons.innerHTML = `
+                    <a href="#" class="btn-login" onclick="showLoginModal()">Login</a>
+                    <a href="#" class="btn-register" onclick="showRegisterModal()">Register</a>
+                `;
+            }
+        }
+        
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            checkAuthState(); // Update UI to show login/register buttons
+            alert('Logged out successfully!');
+            loadJobs(); // Reload jobs to reset state
+        }
+
+        // Load jobs from API
+        async function loadJobs() {
+            try {
+                const response = await fetch('/api/jobs/all');
+                const jobs = await response.json();
+                
+                const jobsList = document.getElementById('jobsList');
+                jobsList.innerHTML = '';
+                
+                // Display first 6 jobs
+                jobs.slice(0, 6).forEach(job => {
+                    const jobCard = createJobCard(job);
+                    jobsList.innerHTML += jobCard;
+                });
+            } catch (error) {
+                console.error('Error loading jobs:', error);
+                // Show sample jobs if API fails
+                showSampleJobs();
+            }
+        }
+        
+        function createJobCard(job) {
+            return `
+                <div class="job-card" onclick="viewJob(${job.id})">
+                    <div class="d-flex align-items-start">
+                        <div class="company-logo">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="job-info flex-grow-1">
+                            <h4>${job.title}</h4>
+                            <div class="company-name">${job.companyName || 'Leading Company'}</div>
+                            <div class="location">
+                                <i class="fas fa-map-marker-alt"></i> ${job.workLocation || 'Chennai'}
+                                <span class="salary ms-3">
+                                    <i class="fas fa-rupee-sign"></i> ${job.minSalary || '50000'} - ${job.maxSalary || '80000'}
+                                </span>
+                            </div>
+                            <div class="job-meta">
+                                <span><i class="fas fa-briefcase"></i> ${job.employmentType || 'Full-time'}</span>
+                                <span><i class="fas fa-users"></i> ${job.vacancies || '1'} Vacancies</span>
+                                <span><i class="fas fa-home"></i> ${job.workMode || 'Office'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showSampleJobs() {
+            const sampleJobs = [
+                {
+                    id: 1,
+                    title: "Senior Java Developer",
+                    companyName: "Tech Solutions Inc.",
+                    workLocation: "Chennai",
+                    minSalary: 80000,
+                    maxSalary: 120000,
+                    employmentType: "Full-time",
+                    vacancies: 3,
+                    workMode: "Hybrid"
+                },
+                {
+                    id: 2,
+                    title: "Python Data Scientist",
+                    companyName: "Data Analytics Pro",
+                    workLocation: "Bangalore",
+                    minSalary: 70000,
+                    maxSalary: 100000,
+                    employmentType: "Full-time",
+                    vacancies: 2,
+                    workMode: "Office"
+                },
+                {
+                    id: 3,
+                    title: "Frontend Developer",
+                    companyName: "Web Innovations Ltd",
+                    workLocation: "Chennai",
+                    minSalary: 60000,
+                    maxSalary: 90000,
+                    employmentType: "Full-time",
+                    vacancies: 4,
+                    workMode: "Remote"
+                }
+            ];
+            
+            const jobsList = document.getElementById('jobsList');
+            jobsList.innerHTML = '';
+            
+            sampleJobs.forEach(job => {
+                const jobCard = createJobCard(job);
+                jobsList.innerHTML += jobCard;
+            });
+        }
+        
+        function searchJobs() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) {
+                window.location.href = `/jobs?search=${encodeURIComponent(searchTerm)}`;
+            }
+        }
+        
+        function filterByCategory(category) {
+            // Show jobs for selected category
+            displayCategoryJobs(category);
+            
+            // Scroll to jobs section
+            const jobsSection = document.getElementById('jobs');
+            const offset = 100;
+            const targetPosition = jobsSection.offsetTop - offset;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+        
+        function displayCategoryJobs(category) {
+            // Sample jobs data for each category
+            const categoryJobs = {
+                'IT': [
+                    {id: 1, title: "Senior Java Developer", companyName: "Tech Solutions Inc.", workLocation: "Chennai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 2, title: "Python Data Scientist", companyName: "Data Analytics Pro", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 3, title: "Frontend Developer", companyName: "Web Innovations Ltd", workLocation: "Chennai", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"},
+                    {id: 4, title: "DevOps Engineer", companyName: "Cloud Systems Inc", workLocation: "Mumbai", minSalary: 75000, maxSalary: 110000, employmentType: "Full-time", vacancies: 2, workMode: "Hybrid"},
+                    {id: 5, title: "Full Stack Developer", companyName: "Digital Agency", workLocation: "Pune", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 5, workMode: "Remote"},
+                    {id: 6, title: "React Developer", companyName: "StartupHub", workLocation: "Bangalore", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 7, title: "Node.js Developer", companyName: "TechVentures", workLocation: "Hyderabad", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 8, title: "Angular Developer", companyName: "Enterprise Solutions", workLocation: "Chennai", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"},
+                    {id: 9, title: "Vue.js Developer", companyName: "Innovation Labs", workLocation: "Mumbai", minSalary: 58000, maxSalary: 88000, employmentType: "Full-time", vacancies: 2, workMode: "Hybrid"},
+                    {id: 10, title: "Mobile App Developer", companyName: "AppStudio", workLocation: "Bangalore", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 11, title: "iOS Developer", companyName: "Apple Partners", workLocation: "Chennai", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 12, title: "Android Developer", companyName: "Google Partners", workLocation: "Hyderabad", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 4, workMode: "Hybrid"},
+                    {id: 13, title: "Flutter Developer", companyName: "CrossPlatform Solutions", workLocation: "Pune", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 14, title: "React Native Developer", companyName: "MobileFirst", workLocation: "Bangalore", minSalary: 62000, maxSalary: 92000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 15, title: "Backend Developer", companyName: "ServerTech", workLocation: "Mumbai", minSalary: 68000, maxSalary: 98000, employmentType: "Full-time", vacancies: 5, workMode: "Hybrid"},
+                    {id: 16, title: "API Developer", companyName: "Integration Experts", workLocation: "Chennai", minSalary: 62000, maxSalary: 92000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 17, title: "Database Administrator", companyName: "DataGuard", workLocation: "Hyderabad", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 18, title: "Cloud Engineer", companyName: "CloudTech Solutions", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 4, workMode: "Hybrid"},
+                    {id: 19, title: "AWS Engineer", companyName: "Amazon Partners", workLocation: "Pune", minSalary: 75000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 20, title: "Azure Engineer", companyName: "Microsoft Partners", workLocation: "Chennai", minSalary: 72000, maxSalary: 108000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 21, title: "Google Cloud Engineer", companyName: "Google Partners", workLocation: "Mumbai", minSalary: 73000, maxSalary: 109000, employmentType: "Full-time", vacancies: 4, workMode: "Hybrid"},
+                    {id: 22, title: "Kubernetes Engineer", companyName: "ContainerTech", workLocation: "Bangalore", minSalary: 78000, maxSalary: 115000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 23, title: "Docker Engineer", companyName: "ContainerSolutions", workLocation: "Hyderabad", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 24, title: "Machine Learning Engineer", companyName: "AI Innovations", workLocation: "Pune", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 5, workMode: "Hybrid"},
+                    {id: 25, title: "AI Engineer", companyName: "DeepTech Solutions", workLocation: "Bangalore", minSalary: 90000, maxSalary: 130000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 26, title: "Data Engineer", companyName: "BigData Analytics", workLocation: "Chennai", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 27, title: "Data Analyst", companyName: "Data Insights", workLocation: "Mumbai", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 6, workMode: "Hybrid"},
+                    {id: 28, title: "Business Intelligence Developer", companyName: "BI Solutions", workLocation: "Hyderabad", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 29, title: "Software Architect", companyName: "Architecture Pro", workLocation: "Bangalore", minSalary: 95000, maxSalary: 140000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 30, title: "Technical Lead", companyName: "LeadTech Solutions", workLocation: "Pune", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 31, title: "Engineering Manager", companyName: "ManagerTech", workLocation: "Chennai", minSalary: 90000, maxSalary: 135000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 32, title: "QA Engineer", companyName: "QualityFirst", workLocation: "Mumbai", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 33, title: "Automation Tester", companyName: "TestAutomation Pro", workLocation: "Hyderabad", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 34, title: "Performance Tester", companyName: "PerformanceTech", workLocation: "Bangalore", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 35, title: "Security Engineer", companyName: "CyberGuard", workLocation: "Pune", minSalary: 75000, maxSalary: 110000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 36, title: "Cybersecurity Analyst", companyName: "SecurityFirst", workLocation: "Chennai", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 37, title: "Network Engineer", companyName: "NetworkPro", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 38, title: "System Administrator", companyName: "AdminTech", workLocation: "Hyderabad", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 39, title: "Linux Administrator", companyName: "LinuxPro", workLocation: "Bangalore", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 40, title: "Windows Administrator", companyName: "WindowsTech", workLocation: "Pune", minSalary: 48000, maxSalary: 78000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 41, title: "Blockchain Developer", companyName: "CryptoTech", workLocation: "Chennai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 42, title: "Smart Contract Developer", companyName: "DeFi Solutions", workLocation: "Mumbai", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 43, title: "Game Developer", companyName: "GameStudio", workLocation: "Hyderabad", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"},
+                    {id: 44, title: "Unity Developer", companyName: "UnityPro", workLocation: "Bangalore", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 45, title: "AR/VR Developer", companyName: "ImmersiveTech", workLocation: "Pune", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 46, title: "IoT Developer", companyName: "IoT Solutions", workLocation: "Chennai", minSalary: 62000, maxSalary: 92000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"},
+                    {id: 47, title: "Embedded Systems Engineer", companyName: "EmbeddedTech", workLocation: "Mumbai", minSalary: 58000, maxSalary: 88000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 48, title: "Robotics Engineer", companyName: "RoboticsPro", workLocation: "Hyderabad", minSalary: 75000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 49, title: "Quantum Computing Engineer", companyName: "QuantumTech", workLocation: "Bangalore", minSalary: 95000, maxSalary: 140000, employmentType: "Full-time", vacancies: 1, workMode: "Remote"},
+                    {id: 50, title: "5G Network Engineer", companyName: "TelecomPro", workLocation: "Pune", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 2, workMode: "Office"}
+                ],
+                'Healthcare': [
+                    {id: 51, title: "Senior Medical Officer", companyName: "General Hospital", workLocation: "Delhi", minSalary: 90000, maxSalary: 130000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 52, title: "Registered Nurse", companyName: "General Hospital", workLocation: "Delhi", minSalary: 40000, maxSalary: 60000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 53, title: "Doctor", companyName: "City Medical Center", workLocation: "Mumbai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 54, title: "Surgeon", companyName: "Specialty Hospital", workLocation: "Bangalore", minSalary: 120000, maxSalary: 180000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 55, title: "Pediatrician", companyName: "Children's Hospital", workLocation: "Chennai", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 56, title: "Cardiologist", companyName: "Heart Institute", workLocation: "Hyderabad", minSalary: 110000, maxSalary: 160000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 57, title: "Neurologist", companyName: "Neuro Care Center", workLocation: "Pune", minSalary: 100000, maxSalary: 150000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 58, title: "Gynecologist", companyName: "Women's Health Center", workLocation: "Delhi", minSalary: 95000, maxSalary: 140000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 59, title: "Dermatologist", companyName: "Skin Care Clinic", workLocation: "Mumbai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 60, title: "Orthopedic Surgeon", companyName: "Bone & Joint Hospital", workLocation: "Bangalore", minSalary: 105000, maxSalary: 155000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 61, title: "Psychiatrist", companyName: "Mental Health Center", workLocation: "Chennai", minSalary: 90000, maxSalary: 135000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 62, title: "Dentist", companyName: "Dental Care Center", workLocation: "Hyderabad", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 63, title: "Pharmacist", companyName: "Medical Pharmacy", workLocation: "Pune", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 64, title: "Medical Lab Technician", companyName: "Diagnostic Lab", workLocation: "Delhi", minSalary: 35000, maxSalary: 55000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 65, title: "Radiologist", companyName: "Imaging Center", workLocation: "Mumbai", minSalary: 95000, maxSalary: 140000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 66, title: "Anesthesiologist", companyName: "Surgery Center", workLocation: "Bangalore", minSalary: 100000, maxSalary: 150000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 67, title: "Pathologist", companyName: "Pathology Lab", workLocation: "Chennai", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 68, title: "Ophthalmologist", companyName: "Eye Hospital", workLocation: "Hyderabad", minSalary: 90000, maxSalary: 135000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 69, title: "ENT Specialist", companyName: "ENT Hospital", workLocation: "Pune", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 70, title: "General Physician", companyName: "Primary Care Center", workLocation: "Delhi", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 71, title: "Emergency Medicine Doctor", companyName: "Emergency Hospital", workLocation: "Mumbai", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 72, title: "ICU Nurse", companyName: "Critical Care Hospital", workLocation: "Bangalore", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 73, title: "Operation Theatre Technician", companyName: "Surgical Center", workLocation: "Chennai", minSalary: 30000, maxSalary: 50000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 74, title: "Physiotherapist", companyName: "Rehabilitation Center", workLocation: "Hyderabad", minSalary: 40000, maxSalary: 65000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 75, title: "Occupational Therapist", companyName: "Therapy Center", workLocation: "Pune", minSalary: 42000, maxSalary: 68000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 76, title: "Speech Therapist", companyName: "Speech Therapy Center", workLocation: "Delhi", minSalary: 38000, maxSalary: 62000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 77, title: "Nutritionist", companyName: "Nutrition Clinic", workLocation: "Mumbai", minSalary: 35000, maxSalary: 60000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 78, title: "Dietitian", companyName: "Diet Clinic", workLocation: "Bangalore", minSalary: 32000, maxSalary: 58000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 79, title: "Medical Coder", companyName: "Healthcare Solutions", workLocation: "Chennai", minSalary: 28000, maxSalary: 48000, employmentType: "Full-time", vacancies: 8, workMode: "Remote"},
+                    {id: 80, title: "Medical Biller", companyName: "Billing Services", workLocation: "Hyderabad", minSalary: 25000, maxSalary: 45000, employmentType: "Full-time", vacancies: 6, workMode: "Remote"},
+                    {id: 81, title: "Hospital Administrator", companyName: "Management Services", workLocation: "Pune", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 82, title: "Healthcare Manager", companyName: "Healthcare Management", workLocation: "Delhi", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 83, title: "Clinical Research Coordinator", companyName: "Research Institute", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 84, title: "Biomedical Engineer", companyName: "Medical Equipment", workLocation: "Bangalore", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 85, title: "Medical Writer", companyName: "Medical Content", workLocation: "Chennai", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 5, workMode: "Remote"},
+                    {id: 86, title: "Healthcare Consultant", companyName: "Consulting Services", workLocation: "Hyderabad", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 87, title: "Medical Transcriptionist", companyName: "Transcription Services", workLocation: "Pune", minSalary: 22000, maxSalary: 42000, employmentType: "Full-time", vacancies: 10, workMode: "Remote"},
+                    {id: 88, title: "Epidemiologist", companyName: "Public Health", workLocation: "Delhi", minSalary: 75000, maxSalary: 115000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 89, title: "Public Health Officer", companyName: "Health Department", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 90, title: "Health Inspector", companyName: "Health Services", workLocation: "Bangalore", minSalary: 40000, maxSalary: 65000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 91, title: "Medical Social Worker", companyName: "Social Services", workLocation: "Chennai", minSalary: 32000, maxSalary: 55000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 92, title: "Hospital Pharmacist", companyName: "Hospital Pharmacy", workLocation: "Hyderabad", minSalary: 48000, maxSalary: 78000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 93, title: "Clinical Psychologist", companyName: "Mental Health Clinic", workLocation: "Pune", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 94, title: "Counselor", companyName: "Counseling Center", workLocation: "Delhi", minSalary: 35000, maxSalary: 60000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 95, title: "Medical Assistant", companyName: "Doctor's Office", workLocation: "Mumbai", minSalary: 25000, maxSalary: 45000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 96, title: "Nursing Assistant", companyName: "Nursing Home", workLocation: "Bangalore", minSalary: 20000, maxSalary: 38000, employmentType: "Full-time", vacancies: 10, workMode: "Office"},
+                    {id: 97, title: "Home Health Aide", companyName: "Home Care Services", workLocation: "Chennai", minSalary: 18000, maxSalary: 35000, employmentType: "Full-time", vacancies: 12, workMode: "Field"},
+                    {id: 98, title: "Patient Care Coordinator", companyName: "Care Coordination", workLocation: "Hyderabad", minSalary: 38000, maxSalary: 62000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 99, title: "Medical Equipment Technician", companyName: "Equipment Services", workLocation: "Pune", minSalary: 30000, maxSalary: 52000, employmentType: "Full-time", vacancies: 5, workMode: "Field"},
+                    {id: 100, title: "Health Data Analyst", companyName: "Health Analytics", workLocation: "Delhi", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"}
+                ],
+                'Finance': [
+                    {id: 101, title: "Senior Accountant", companyName: "Finance Experts Ltd", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 102, title: "Financial Analyst", companyName: "Investment Analytics Pro", workLocation: "Delhi", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 103, title: "Chartered Accountant", companyName: "CA Firm", workLocation: "Bangalore", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 104, title: "Cost Accountant", companyName: "Cost Accounting Services", workLocation: "Chennai", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 105, title: "Tax Consultant", companyName: "Tax Advisory", workLocation: "Hyderabad", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 106, title: "Audit Manager", companyName: "Audit Services", workLocation: "Pune", minSalary: 75000, maxSalary: 115000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 107, title: "Internal Auditor", companyName: "Internal Audit", workLocation: "Delhi", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 108, title: "External Auditor", companyName: "External Audit", workLocation: "Mumbai", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 109, title: "Financial Controller", companyName: "Controller Services", workLocation: "Bangalore", minSalary: 85000, maxSalary: 125000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 110, title: "Finance Manager", companyName: "Finance Management", workLocation: "Chennai", minSalary: 90000, maxSalary: 135000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 111, title: "CFO", companyName: "CFO Services", workLocation: "Hyderabad", minSalary: 150000, maxSalary: 250000, employmentType: "Full-time", vacancies: 1, workMode: "Office"},
+                    {id: 112, title: "Investment Banker", companyName: "Investment Banking", workLocation: "Pune", minSalary: 120000, maxSalary: 200000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 113, title: "Equity Research Analyst", companyName: "Equity Research", workLocation: "Delhi", minSalary: 70000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 114, title: "Credit Analyst", companyName: "Credit Analysis", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 115, title: "Risk Analyst", companyName: "Risk Management", workLocation: "Bangalore", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 116, title: "Compliance Officer", companyName: "Compliance Services", workLocation: "Chennai", minSalary: 65000, maxSalary: 95000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 117, title: "Anti Money Laundering Officer", companyName: "AML Services", workLocation: "Hyderabad", minSalary: 70000, maxSalary: 105000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 118, title: "Financial Planner", companyName: "Financial Planning", workLocation: "Pune", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 119, title: "Wealth Manager", companyName: "Wealth Management", workLocation: "Delhi", minSalary: 80000, maxSalary: 150000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 120, title: "Portfolio Manager", companyName: "Portfolio Services", workLocation: "Mumbai", minSalary: 90000, maxSalary: 140000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 121, title: "Fund Manager", companyName: "Fund Management", workLocation: "Bangalore", minSalary: 100000, maxSalary: 160000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 122, title: "Treasury Manager", companyName: "Treasury Services", workLocation: "Chennai", minSalary: 85000, maxSalary: 130000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 123, title: "Cash Manager", companyName: "Cash Management", workLocation: "Hyderabad", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 124, title: "Accounts Payable Specialist", companyName: "AP Services", workLocation: "Pune", minSalary: 35000, maxSalary: 55000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 125, title: "Accounts Receivable Specialist", companyName: "AR Services", workLocation: "Delhi", minSalary: 38000, maxSalary: 58000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 126, title: "Payroll Specialist", companyName: "Payroll Services", workLocation: "Mumbai", minSalary: 40000, maxSalary: 65000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 127, title: "Bookkeeper", companyName: "Bookkeeping Services", workLocation: "Bangalore", minSalary: 30000, maxSalary: 50000, employmentType: "Full-time", vacancies: 8, workMode: "Remote"},
+                    {id: 128, title: "Tax Accountant", companyName: "Tax Accounting", workLocation: "Chennai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 129, title: "GST Consultant", companyName: "GST Services", workLocation: "Hyderabad", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 130, title: "TDS Consultant", companyName: "TDS Services", workLocation: "Pune", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 131, title: "Financial Advisor", companyName: "Advisory Services", workLocation: "Delhi", minSalary: 60000, maxSalary: 120000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 132, title: "Insurance Advisor", companyName: "Insurance Services", workLocation: "Mumbai", minSalary: 40000, maxSalary: 80000, employmentType: "Full-time", vacancies: 8, workMode: "Field"},
+                    {id: 133, title: "Insurance Agent", companyName: "Insurance Agency", workLocation: "Bangalore", minSalary: 30000, maxSalary: 60000, employmentType: "Full-time", vacancies: 10, workMode: "Field"},
+                    {id: 134, title: "Underwriter", companyName: "Underwriting Services", workLocation: "Chennai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 135, title: "Claims Adjuster", companyName: "Claims Services", workLocation: "Hyderabad", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 5, workMode: "Field"},
+                    {id: 136, title: "Actuary", companyName: "Actuarial Services", workLocation: "Pune", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 137, title: "Quantitative Analyst", companyName: "Quant Services", workLocation: "Delhi", minSalary: 90000, maxSalary: 140000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 138, title: "Data Scientist Finance", companyName: "FinTech Analytics", workLocation: "Mumbai", minSalary: 85000, maxSalary: 130000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"},
+                    {id: 139, title: "Blockchain Developer Finance", companyName: "FinTech Solutions", workLocation: "Bangalore", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 4, workMode: "Hybrid"},
+                    {id: 140, title: "Cryptocurrency Analyst", companyName: "Crypto Analytics", workLocation: "Chennai", minSalary: 70000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 141, title: "Forex Trader", companyName: "Forex Trading", workLocation: "Hyderabad", minSalary: 60000, maxSalary: 150000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 142, title: "Stock Broker", companyName: "Stock Broking", workLocation: "Pune", minSalary: 50000, maxSalary: 120000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 143, title: "Commodity Trader", companyName: "Commodity Trading", workLocation: "Delhi", minSalary: 55000, maxSalary: 130000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 144, title: "Derivatives Analyst", companyName: "Derivatives Services", workLocation: "Mumbai", minSalary: 70000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 145, title: "M&A Analyst", companyName: "M&A Advisory", workLocation: "Bangalore", minSalary: 90000, maxSalary: 140000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 146, title: "Private Equity Analyst", companyName: "Private Equity", workLocation: "Chennai", minSalary: 100000, maxSalary: 160000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 147, title: "Venture Capital Analyst", companyName: "Venture Capital", workLocation: "Hyderabad", minSalary: 95000, maxSalary: 150000, employmentType: "Full-time", vacancies: 1, workMode: "Office"},
+                    {id: 148, title: "Financial Modeler", companyName: "Modeling Services", workLocation: "Pune", minSalary: 70000, maxSalary: 110000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 149, title: "Budget Analyst", companyName: "Budget Services", workLocation: "Delhi", minSalary: 50000, maxSalary: 80000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 150, title: "Cost Analyst", companyName: "Cost Analysis", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 3, workMode: "Office"}
+                ],
+                'Education': [
+                    {id: 151, title: "Senior Professor", companyName: "University College", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 1, workMode: "Office"},
+                    {id: 152, title: "High School Teacher", companyName: "Education Academy", workLocation: "Chennai", minSalary: 35000, maxSalary: 50000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 153, title: "Primary School Teacher", companyName: "Primary School", workLocation: "Delhi", minSalary: 25000, maxSalary: 40000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 154, title: "Mathematics Teacher", companyName: "Math Academy", workLocation: "Mumbai", minSalary: 30000, maxSalary: 50000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 155, title: "Science Teacher", companyName: "Science Academy", workLocation: "Bangalore", minSalary: 32000, maxSalary: 52000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 156, title: "English Teacher", companyName: "English Academy", workLocation: "Chennai", minSalary: 28000, maxSalary: 48000, employmentType: "Full-time", vacancies: 7, workMode: "Office"},
+                    {id: 157, title: "Computer Science Teacher", companyName: "Tech School", workLocation: "Hyderabad", minSalary: 35000, maxSalary: 58000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 158, title: "Physics Teacher", companyName: "Physics Institute", workLocation: "Pune", minSalary: 33000, maxSalary: 55000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 159, title: "Chemistry Teacher", companyName: "Chemistry Academy", workLocation: "Delhi", minSalary: 32000, maxSalary: 54000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 160, title: "Biology Teacher", companyName: "Biology Institute", workLocation: "Mumbai", minSalary: 31000, maxSalary: 53000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 161, title: "History Teacher", companyName: "History Academy", workLocation: "Bangalore", minSalary: 29000, maxSalary: 49000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 162, title: "Geography Teacher", companyName: "Geography Institute", workLocation: "Chennai", minSalary: 28000, maxSalary: 48000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 163, title: "Economics Teacher", companyName: "Economics Academy", workLocation: "Hyderabad", minSalary: 34000, maxSalary: 56000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 164, title: "Physical Education Teacher", companyName: "Sports Academy", workLocation: "Pune", minSalary: 25000, maxSalary: 45000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 165, title: "Art Teacher", companyName: "Art School", workLocation: "Delhi", minSalary: 27000, maxSalary: 47000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 166, title: "Music Teacher", companyName: "Music Academy", workLocation: "Mumbai", minSalary: 26000, maxSalary: 46000, employmentType: "Full-time", vacancies: 7, workMode: "Office"},
+                    {id: 167, title: "Dance Teacher", companyName: "Dance Academy", workLocation: "Bangalore", minSalary: 24000, maxSalary: 44000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 168, title: "Yoga Instructor", companyName: "Yoga Center", workLocation: "Chennai", minSalary: 22000, maxSalary: 42000, employmentType: "Full-time", vacancies: 10, workMode: "Office"},
+                    {id: 169, title: "Librarian", companyName: "City Library", workLocation: "Hyderabad", minSalary: 20000, maxSalary: 38000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 170, title: "School Principal", companyName: "Leading School", workLocation: "Pune", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 171, title: "Vice Principal", companyName: "Education Center", workLocation: "Delhi", minSalary: 50000, maxSalary: 75000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 172, title: "Academic Coordinator", companyName: "Academic Services", workLocation: "Mumbai", minSalary: 40000, maxSalary: 65000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 173, title: "Curriculum Developer", companyName: "Curriculum Services", workLocation: "Bangalore", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 174, title: "Education Consultant", companyName: "Consulting Services", workLocation: "Chennai", minSalary: 50000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Remote"},
+                    {id: 175, title: "Training Coordinator", companyName: "Training Services", workLocation: "Hyderabad", minSalary: 35000, maxSalary: 60000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 176, title: "Corporate Trainer", companyName: "Corporate Training", workLocation: "Pune", minSalary: 55000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 177, title: "Soft Skills Trainer", companyName: "Skills Development", workLocation: "Delhi", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 178, title: "Technical Trainer", companyName: "Technical Training", workLocation: "Mumbai", minSalary: 50000, maxSalary: 85000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 179, title: "Language Trainer", companyName: "Language Academy", workLocation: "Bangalore", minSalary: 30000, maxSalary: 55000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 180, title: "Online Tutor", companyName: "Online Education", workLocation: "Chennai", minSalary: 25000, maxSalary: 50000, employmentType: "Full-time", vacancies: 15, workMode: "Remote"},
+                    {id: 181, title: "Subject Matter Expert", companyName: "SME Services", workLocation: "Hyderabad", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 5, workMode: "Remote"},
+                    {id: 182, title: "Content Developer Education", companyName: "Education Content", workLocation: "Pune", minSalary: 35000, maxSalary: 65000, employmentType: "Full-time", vacancies: 6, workMode: "Remote"},
+                    {id: 183, title: "Instructional Designer", companyName: "Design Services", workLocation: "Delhi", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 184, title: "Education Technology Specialist", companyName: "EdTech Solutions", workLocation: "Mumbai", minSalary: 50000, maxSalary: 85000, employmentType: "Full-time", vacancies: 4, workMode: "Hybrid"},
+                    {id: 185, title: "Learning Management System Admin", companyName: "LMS Services", workLocation: "Bangalore", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 186, title: "Student Counselor", companyName: "Counseling Services", workLocation: "Chennai", minSalary: 30000, maxSalary: 55000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 187, title: "Career Counselor", companyName: "Career Guidance", workLocation: "Hyderabad", minSalary: 35000, maxSalary: 65000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 188, title: "Admissions Officer", companyName: "Admissions Services", workLocation: "Pune", minSalary: 32000, maxSalary: 58000, employmentType: "Full-time", vacancies: 5, workMode: "Office"},
+                    {id: 189, title: "Examination Officer", companyName: "Exam Services", workLocation: "Delhi", minSalary: 30000, maxSalary: 55000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 190, title: "Academic Advisor", companyName: "Advisory Services", workLocation: "Mumbai", minSalary: 38000, maxSalary: 62000, employmentType: "Full-time", vacancies: 6, workMode: "Office"},
+                    {id: 191, title: "Research Assistant Education", companyName: "Research Institute", workLocation: "Bangalore", minSalary: 28000, maxSalary: 48000, employmentType: "Full-time", vacancies: 8, workMode: "Office"},
+                    {id: 192, title: "Education Administrator", companyName: "Admin Services", workLocation: "Chennai", minSalary: 40000, maxSalary: 70000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 193, title: "School Administrator", companyName: "School Management", workLocation: "Hyderabad", minSalary: 35000, maxSalary: 60000, employmentType: "Full-time", vacancies: 4, workMode: "Office"},
+                    {id: 194, title: "College Administrator", companyName: "College Management", workLocation: "Pune", minSalary: 45000, maxSalary: 75000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 195, title: "Education Writer", companyName: "Education Content", workLocation: "Delhi", minSalary: 32000, maxSalary: 58000, employmentType: "Full-time", vacancies: 5, workMode: "Remote"},
+                    {id: 196, title: "Education Blogger", companyName: "Blog Services", workLocation: "Mumbai", minSalary: 25000, maxSalary: 50000, employmentType: "Full-time", vacancies: 8, workMode: "Remote"},
+                    {id: 197, title: "Education Video Creator", companyName: "Video Education", workLocation: "Bangalore", minSalary: 35000, maxSalary: 65000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"},
+                    {id: 198, title: "E-learning Developer", companyName: "E-learning Solutions", workLocation: "Chennai", minSalary: 40000, maxSalary: 75000, employmentType: "Full-time", vacancies: 3, workMode: "Remote"},
+                    {id: 199, title: "Education Sales Executive", companyName: "Education Sales", workLocation: "Hyderabad", minSalary: 30000, maxSalary: 60000, employmentType: "Full-time", vacancies: 10, workMode: "Field"},
+                    {id: 200, title: "Education Marketing Manager", companyName: "Education Marketing", workLocation: "Pune", minSalary: 50000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Office"}
+                ]
+            };
+            
+            const jobs = categoryJobs[category] || [];
+            const jobsList = document.getElementById('jobsList');
+            jobsList.innerHTML = '';
+            
+            // Update section title
+            const sectionTitle = document.querySelector('.jobs-section .section-title');
+            sectionTitle.textContent = `${category} Jobs (${jobs.length} available)`;
+            
+            // Display jobs with apply button
+            jobs.forEach(job => {
+                const jobCard = createJobCardWithApply(job);
+                jobsList.innerHTML += jobCard;
+            });
+        }
+        
+        function createJobCardWithApply(job) {
+            return `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="job-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="company-logo">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="job-actions">
+                                <button class="btn btn-sm btn-outline-primary" onclick="viewJobDetails(${job.id})">View</button>
+                                <button class="btn btn-sm btn-primary ms-2" onclick="applyForJob(${job.id}, '${job.title}', '${job.companyName}')">Apply</button>
+                            </div>
+                        </div>
+                        <div class="job-info">
+                            <h4>${job.title}</h4>
+                            <div class="company-name">${job.companyName || 'Leading Company'}</div>
+                            <div class="location">
+                                <i class="fas fa-map-marker-alt"></i> ${job.workLocation || 'Chennai'}
+                                <span class="salary ms-3">
+                                    <i class="fas fa-rupee-sign"></i> ${job.minSalary || '50000'} - ${job.maxSalary || '80000'}
+                                </span>
+                            </div>
+                            <div class="job-meta">
+                                <span><i class="fas fa-briefcase"></i> ${job.employmentType || 'Full-time'}</span>
+                                <span><i class="fas fa-users"></i> ${job.vacancies || '1'} Vacancies</span>
+                                <span><i class="fas fa-home"></i> ${job.workMode || 'Office'}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function viewJobDetails(jobId) {
+            // Show job details modal with option to apply
+            showJobDetailsModal(jobId);
+        }
+        
+        function showJobDetailsModal(jobId) {
+            // Find job details from category jobs
+            const jobDetails = findJobById(jobId);
+            
+            if (!jobDetails) {
+                alert('Job details not found!');
+                return;
+            }
+            
+            // Get detailed job requirements
+            const detailedRequirements = getDetailedJobRequirements(jobDetails.title, jobDetails.companyName);
+            
+            // Create modal HTML
+            const modalHtml = `
+                <div class="modal fade" id="jobDetailsModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-info text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-info-circle"></i> ${jobDetails.title}
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Company Info -->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="company-logo me-3">
+                                                <i class="fas fa-building"></i>
+                                            </div>
+                                            <div>
+                                                <h5 class="mb-1">${jobDetails.companyName}</h5>
+                                                <p class="text-muted mb-0">${detailedRequirements.companyDescription}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job Overview -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-briefcase"></i> Job Overview</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Position:</strong> ${jobDetails.title}</p>
+                                                <p><strong>Location:</strong> ${jobDetails.workLocation}</p>
+                                                <p><strong>Work Mode:</strong> ${jobDetails.workMode}</p>
+                                                <p><strong>Employment Type:</strong> ${jobDetails.employmentType}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Salary:</strong> ₹${jobDetails.minSalary} - ₹${jobDetails.maxSalary} per month</p>
+                                                <p><strong>Vacancies:</strong> ${jobDetails.vacancies}</p>
+                                                <p><strong>Last Date:</strong> <span class="text-danger">${detailedRequirements.lastDate}</span></p>
+                                                <p><strong>Posted:</strong> ${detailedRequirements.postedDate}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Job Description -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-file-alt"></i> Job Description</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>${detailedRequirements.jobDescription}</p>
+                                        
+                                        <h6>Key Responsibilities:</h6>
+                                        <ul>
+                                            ${detailedRequirements.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Requirements -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-clipboard-list"></i> Requirements</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <h6>Education:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.education.map(edu => `<li><i class="fas fa-check text-success"></i> ${edu}</li>`).join('')}
+                                        </ul>
+                                        
+                                        <h6 class="mt-3">Experience:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.experience.map(exp => `<li><i class="fas fa-check text-success"></i> ${exp}</li>`).join('')}
+                                        </ul>
+                                        
+                                        <h6 class="mt-3">Skills Required:</h6>
+                                        <div class="skills-tags mb-3">
+                                            ${detailedRequirements.skills.map(skill => `<span class="badge bg-primary me-2 mb-2">${skill}</span>`).join('')}
+                                        </div>
+                                        
+                                        <h6>Additional Requirements:</h6>
+                                        <ul class="list-unstyled">
+                                            ${detailedRequirements.additionalRequirements.map(req => `<li><i class="fas fa-check text-info"></i> ${req}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Benefits -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-gift"></i> Benefits & Perks</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            ${detailedRequirements.benefits.map(benefit => `<li><i class="fas fa-star text-warning"></i> ${benefit}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Application Form -->
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="fas fa-user-edit"></i> Apply for this Position</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="jobDetailsApplicationForm">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Full Name *</label>
+                                                    <input type="text" class="form-control" id="detailsApplicantName" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email *</label>
+                                                    <input type="email" class="form-control" id="detailsApplicantEmail" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Phone Number *</label>
+                                                    <input type="tel" class="form-control" id="detailsApplicantPhone" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Location *</label>
+                                                    <input type="text" class="form-control" id="detailsApplicantLocation" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Total Experience *</label>
+                                                    <select class="form-control" id="detailsApplicantExperience" required>
+                                                        <option value="">Select Experience</option>
+                                                        <option value="Fresher">Fresher</option>
+                                                        <option value="0-1 years">0-1 years</option>
+                                                        <option value="1-3 years">1-3 years</option>
+                                                        <option value="3-5 years">3-5 years</option>
+                                                        <option value="5-10 years">5-10 years</option>
+                                                        <option value="10+ years">10+ years</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Company</label>
+                                                    <input type="text" class="form-control" id="detailsCurrentCompany" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Key Skills *</label>
+                                                <textarea class="form-control" id="detailsApplicantSkills" rows="3" placeholder="Enter your key skills separated by commas" required></textarea>
+                                                <small class="text-muted">Example: Java, Spring Boot, MySQL, AWS, Git</small>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Cover Letter</label>
+                                                <textarea class="form-control" id="detailsCoverLetter" rows="4" placeholder="Tell us why you're interested in this position..."></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Resume/CV *</label>
+                                                <input type="file" class="form-control" id="detailsResumeFile" accept=".pdf,.doc,.docx" required>
+                                                <small class="text-muted">Upload your resume (PDF, DOC, DOCX - Max 5MB)</small>
+                                            </div>
+                                            
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="detailsTermsCheck" required>
+                                                <label class="form-check-label" for="detailsTermsCheck">
+                                                    I agree to the terms and conditions and confirm that all information provided is accurate.
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-success" onclick="submitJobDetailsApplication(${jobDetails.id}, '${jobDetails.title}', '${jobDetails.companyName}')">
+                                    <i class="fas fa-paper-plane"></i> Apply Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('jobDetailsModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('jobDetailsModal'));
+            modal.show();
+            
+            // Pre-fill user data if available
+            prefillJobDetailsForm();
+        }
+        
+        function findJobById(jobId) {
+            // Search through all category jobs
+            const allCategories = ['IT', 'Healthcare', 'Finance', 'Education'];
+            
+            for (const category of allCategories) {
+                const categoryJobs = getCategoryJobs(category);
+                const job = categoryJobs.find(j => j.id === jobId);
+                if (job) {
+                    return job;
+                }
+            }
+            return null;
+        }
+        
+        function getCategoryJobs(category) {
+            // Return jobs for a specific category (simplified version)
+            const categoryJobs = {
+                'IT': [
+                    {id: 1, title: "Senior Java Developer", companyName: "Tech Solutions Inc.", workLocation: "Chennai", minSalary: 80000, maxSalary: 120000, employmentType: "Full-time", vacancies: 3, workMode: "Office"},
+                    {id: 2, title: "Python Data Scientist", companyName: "Data Analytics Pro", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 3, title: "Frontend Developer", companyName: "Web Innovations Ltd", workLocation: "Chennai", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 4, workMode: "Remote"}
+                ],
+                'Healthcare': [
+                    {id: 51, title: "Senior Medical Officer", companyName: "General Hospital", workLocation: "Delhi", minSalary: 90000, maxSalary: 130000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 52, title: "Registered Nurse", companyName: "General Hospital", workLocation: "Delhi", minSalary: 40000, maxSalary: 60000, employmentType: "Full-time", vacancies: 8, workMode: "Office"}
+                ],
+                'Finance': [
+                    {id: 101, title: "Senior Accountant", companyName: "Finance Experts Ltd", workLocation: "Mumbai", minSalary: 55000, maxSalary: 85000, employmentType: "Full-time", vacancies: 2, workMode: "Office"},
+                    {id: 102, title: "Financial Analyst", companyName: "Investment Analytics Pro", workLocation: "Delhi", minSalary: 60000, maxSalary: 90000, employmentType: "Full-time", vacancies: 3, workMode: "Hybrid"}
+                ],
+                'Education': [
+                    {id: 151, title: "Senior Professor", companyName: "University College", workLocation: "Bangalore", minSalary: 70000, maxSalary: 100000, employmentType: "Full-time", vacancies: 1, workMode: "Office"},
+                    {id: 152, title: "High School Teacher", companyName: "Education Academy", workLocation: "Chennai", minSalary: 35000, maxSalary: 50000, employmentType: "Full-time", vacancies: 5, workMode: "Office"}
+                ]
+            };
+            
+            return categoryJobs[category] || [];
+        }
+        
+        function getDetailedJobRequirements(jobTitle, companyName) {
+            const requirements = {
+                'Senior Java Developer': {
+                    companyDescription: "Leading IT solutions provider specializing in enterprise software development",
+                    lastDate: "March 15, 2024",
+                    postedDate: "February 20, 2024",
+                    jobDescription: "We are looking for an experienced Senior Java Developer to join our dynamic team. You will be responsible for developing high-quality software solutions and working with cutting-edge technologies.",
+                    responsibilities: [
+                        "Design and develop Java-based applications using Spring Boot framework",
+                        "Write clean, maintainable, and efficient code",
+                        "Collaborate with cross-functional teams to define and ship new features",
+                        "Participate in code reviews and ensure code quality standards",
+                        "Troubleshoot, debug and upgrade existing systems",
+                        "Mentor junior developers and provide technical guidance"
+                    ],
+                    education: [
+                        "B.E/B.Tech in Computer Science or related field",
+                        "M.Tech/MCA preferred",
+                        "Minimum 60% throughout academics"
+                    ],
+                    experience: [
+                        "Minimum 3 years of Java development experience",
+                        "Experience with Spring Boot framework",
+                        "Hands-on experience with REST APIs",
+                        "Database knowledge (MySQL, PostgreSQL)"
+                    ],
+                    skills: ['Java', 'Spring Boot', 'REST APIs', 'MySQL', 'AWS', 'Git', 'Maven', 'Jenkins'],
+                    additionalRequirements: [
+                        "Strong problem-solving skills",
+                        "Excellent communication skills",
+                        "Ability to work in a team environment",
+                        "Willingness to learn new technologies"
+                    ],
+                    benefits: [
+                        "Competitive salary and performance bonuses",
+                        "Health insurance for you and your family",
+                        "Provident Fund and gratuity",
+                        "Flexible working hours",
+                        "Professional development opportunities",
+                        "Annual company trips and team building activities"
+                    ]
+                },
+                'Python Data Scientist': {
+                    companyDescription: "Data analytics company focused on machine learning and AI solutions",
+                    lastDate: "March 20, 2024",
+                    postedDate: "February 22, 2024",
+                    jobDescription: "Join our data science team to work on cutting-edge machine learning projects and help businesses make data-driven decisions.",
+                    responsibilities: [
+                        "Develop and implement machine learning models",
+                        "Analyze large datasets to extract meaningful insights",
+                        "Create data visualizations and reports",
+                        "Collaborate with business stakeholders to understand requirements",
+                        "Optimize algorithms for better performance",
+                        "Stay updated with latest ML/AI trends"
+                    ],
+                    education: [
+                        "B.Sc/M.Sc in Statistics, Mathematics, or Computer Science",
+                        "M.Tech in Data Science preferred",
+                        "PhD in relevant field is a plus"
+                    ],
+                    experience: [
+                        "2+ years of experience in data analysis",
+                        "Experience with Python and data science libraries",
+                        "Knowledge of statistical analysis and machine learning",
+                        "Experience with data visualization tools"
+                    ],
+                    skills: ['Python', 'Machine Learning', 'Data Analysis', 'SQL', 'Tableau', 'Pandas', 'NumPy', 'Scikit-learn'],
+                    additionalRequirements: [
+                        "Strong analytical and problem-solving skills",
+                        "Experience with big data technologies",
+                        "Knowledge of cloud platforms (AWS/Azure/GCP)",
+                        "Excellent presentation skills"
+                    ],
+                    benefits: [
+                        "Stock options and ESOP",
+                        "Flexible work from home policy",
+                        "Conference and training budget",
+                        "Latest MacBook Pro and equipment",
+                        "Gym membership and wellness programs",
+                        "Free snacks and beverages"
+                    ]
+                },
+                'Frontend Developer': {
+                    companyDescription: "Innovative web development company creating modern user experiences",
+                    lastDate: "March 10, 2024",
+                    postedDate: "February 25, 2024",
+                    jobDescription: "We are seeking a talented Frontend Developer to create amazing user interfaces and enhance our web applications.",
+                    responsibilities: [
+                        "Develop responsive and interactive web applications",
+                        "Collaborate with UX designers to implement designs",
+                        "Optimize applications for maximum speed and scalability",
+                        "Write clean, well-documented code",
+                        "Participate in code reviews and agile development",
+                        "Stay current with emerging frontend technologies"
+                    ],
+                    education: [
+                        "B.E/B.Tech in Computer Science or related field",
+                        "B.Sc in Computer Science or IT",
+                        "Diploma in Web Development"
+                    ],
+                    experience: [
+                        "1-3 years of frontend development experience",
+                        "Experience with modern JavaScript frameworks",
+                        "Knowledge of responsive design principles",
+                        "Experience with version control systems"
+                    ],
+                    skills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'TypeScript', 'Redux', 'Webpack', 'Git'],
+                    additionalRequirements: [
+                        "Strong understanding of web standards",
+                        "Experience with UI/UX design principles",
+                        "Knowledge of performance optimization",
+                        "Ability to work independently"
+                    ],
+                    benefits: [
+                        "Remote work opportunity",
+                        "Flexible working hours",
+                        "Annual performance bonus",
+                        "Health and dental insurance",
+                        "Paid time off and holidays",
+                        "Professional development budget"
+                    ]
+                }
+            };
+            
+            return requirements[jobTitle] || requirements['Senior Java Developer'];
+        }
+        
+        function prefillJobDetailsForm() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.username) {
+                document.getElementById('detailsApplicantName').value = user.username || '';
+            }
+            if (user.email) {
+                document.getElementById('detailsApplicantEmail').value = user.email || '';
+            }
+        }
+        
+        function submitJobDetailsApplication(jobId, jobTitle, companyName) {
+            const form = document.getElementById('jobDetailsApplicationForm');
+            
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Collect form data
+            const applicationData = {
+                id: Date.now(),
+                jobId: jobId,
+                jobTitle: jobTitle,
+                company: companyName,
+                applicantName: document.getElementById('detailsApplicantName').value,
+                applicantEmail: document.getElementById('detailsApplicantEmail').value,
+                applicantPhone: document.getElementById('detailsApplicantPhone').value,
+                applicantLocation: document.getElementById('detailsApplicantLocation').value,
+                experience: document.getElementById('detailsApplicantExperience').value,
+                currentCompany: document.getElementById('detailsCurrentCompany').value,
+                skills: document.getElementById('detailsApplicantSkills').value,
+                coverLetter: document.getElementById('detailsCoverLetter').value,
+                resumeFile: document.getElementById('detailsResumeFile').files[0]?.name || '',
+                appliedDate: new Date().toISOString().split('T')[0],
+                status: 'pending',
+                userId: JSON.parse(localStorage.getItem('user') || '{}').id || 'user_' + Date.now()
+            };
+            
+            // Store application
+            const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+            applications.push(applicationData);
+            localStorage.setItem('jobApplications', JSON.stringify(applications));
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('jobDetailsModal'));
+            modal.hide();
+            
+            // Show success message
+            showApplicationSuccess(jobTitle, companyName);
+            
+            // Notify company dashboard
+            setTimeout(() => {
+                showCompanyNotification(companyName, jobTitle, applicationData.applicantName);
+            }, 1000);
+        }
+        
+        function applyForJob(jobId, jobTitle, companyName) {
+            // Check if user is logged in
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to apply for jobs!');
+                showLoginModal();
+                return;
+            }
+            
+            // Show detailed application modal
+            showApplicationModal(jobId, jobTitle, companyName);
+        }
+        
+        function showApplicationModal(jobId, jobTitle, companyName) {
+            // Get job details
+            const jobDetails = getJobDetails(jobId, jobTitle, companyName);
+            
+            // Create modal HTML
+            const modalHtml = `
+                <div class="modal fade" id="applicationModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="fas fa-briefcase"></i> Apply for ${jobTitle}
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Job Details Section -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> Job Details</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Position:</strong> ${jobTitle}</p>
+                                                <p><strong>Company:</strong> ${companyName}</p>
+                                                <p><strong>Location:</strong> ${jobDetails.location}</p>
+                                                <p><strong>Work Mode:</strong> ${jobDetails.workMode}</p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Salary:</strong> ${jobDetails.salary}</p>
+                                                <p><strong>Employment Type:</strong> ${jobDetails.employmentType}</p>
+                                                <p><strong>Last Date:</strong> <span class="text-danger">${jobDetails.lastDate}</span></p>
+                                                <p><strong>Vacancies:</strong> ${jobDetails.vacancies}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Requirements Section -->
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-clipboard-list"></i> Requirements</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="requirements-section">
+                                            <h6>Education:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.education.map(edu => `<li><i class="fas fa-check text-success"></i> ${edu}</li>`).join('')}
+                                            </ul>
+                                            
+                                            <h6 class="mt-3">Experience:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.experience.map(exp => `<li><i class="fas fa-check text-success"></i> ${exp}</li>`).join('')}
+                                            </ul>
+                                            
+                                            <h6 class="mt-3">Skills Required:</h6>
+                                            <div class="skills-tags">
+                                                ${jobDetails.skills.map(skill => `<span class="badge bg-primary me-2 mb-2">${skill}</span>`).join('')}
+                                            </div>
+                                            
+                                            <h6 class="mt-3">Additional Requirements:</h6>
+                                            <ul class="list-unstyled">
+                                                ${jobDetails.additionalRequirements.map(req => `<li><i class="fas fa-check text-info"></i> ${req}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Application Form -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-user-edit"></i> Application Details</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="applicationForm">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Full Name *</label>
+                                                    <input type="text" class="form-control" id="applicantName" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Email *</label>
+                                                    <input type="email" class="form-control" id="applicantEmail" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Phone Number *</label>
+                                                    <input type="tel" class="form-control" id="applicantPhone" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Location *</label>
+                                                    <input type="text" class="form-control" id="applicantLocation" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Total Experience *</label>
+                                                    <select class="form-control" id="applicantExperience" required>
+                                                        <option value="">Select Experience</option>
+                                                        <option value="Fresher">Fresher</option>
+                                                        <option value="0-1 years">0-1 years</option>
+                                                        <option value="1-3 years">1-3 years</option>
+                                                        <option value="3-5 years">3-5 years</option>
+                                                        <option value="5-10 years">5-10 years</option>
+                                                        <option value="10+ years">10+ years</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Current Company</label>
+                                                    <input type="text" class="form-control" id="currentCompany" placeholder="Optional">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Highest Qualification *</label>
+                                                    <select class="form-control" id="qualification" required>
+                                                        <option value="">Select Qualification</option>
+                                                        <option value="10th">10th</option>
+                                                        <option value="12th">12th</option>
+                                                        <option value="Diploma">Diploma</option>
+                                                        <option value="Bachelors">Bachelors</option>
+                                                        <option value="Masters">Masters</option>
+                                                        <option value="PhD">PhD</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Field of Study *</label>
+                                                    <input type="text" class="form-control" id="fieldOfStudy" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Key Skills *</label>
+                                                <textarea class="form-control" id="applicantSkills" rows="3" placeholder="Enter your key skills separated by commas" required></textarea>
+                                                <small class="text-muted">Example: Java, Spring Boot, MySQL, AWS, Git</small>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Cover Letter</label>
+                                                <textarea class="form-control" id="coverLetter" rows="4" placeholder="Tell us why you're interested in this position..."></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Expected Salary (Monthly)</label>
+                                                <input type="text" class="form-control" id="expectedSalary" placeholder="e.g., 50000-70000">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Notice Period</label>
+                                                <select class="form-control" id="noticePeriod">
+                                                    <option value="Immediate">Immediate</option>
+                                                    <option value="15 days">15 days</option>
+                                                    <option value="30 days">30 days</option>
+                                                    <option value="60 days">60 days</option>
+                                                    <option value="90 days">90 days</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Resume/CV *</label>
+                                                <input type="file" class="form-control" id="resumeFile" accept=".pdf,.doc,.docx" required>
+                                                <small class="text-muted">Upload your resume (PDF, DOC, DOCX - Max 5MB)</small>
+                                            </div>
+                                            
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                                <label class="form-check-label" for="termsCheck">
+                                                    I agree to the terms and conditions and confirm that all information provided is accurate.
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="submitApplication(${jobId}, '${jobTitle}', '${companyName}')">
+                                    <i class="fas fa-paper-plane"></i> Submit Application
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            const existingModal = document.getElementById('applicationModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+            
+            // Add modal to body
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('applicationModal'));
+            modal.show();
+            
+            // Pre-fill user data if available
+            prefillApplicationForm();
+        }
+        
+        function getJobDetails(jobId, jobTitle, companyName) {
+            // Sample job details - in real app, this would come from backend
+            const jobDetailsMap = {
+                'Senior Java Developer': {
+                    location: 'Chennai, Tamil Nadu',
+                    workMode: 'Office',
+                    salary: '₹80,000 - ₹120,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 15, 2024',
+                    vacancies: '3',
+                    education: [
+                        'B.E/B.Tech in Computer Science or related field',
+                        'M.Tech/MCA preferred',
+                        'Minimum 60% throughout academics'
+                    ],
+                    experience: [
+                        'Minimum 3 years of Java development experience',
+                        'Experience with Spring Boot framework',
+                        'Hands-on experience with REST APIs',
+                        'Database knowledge (MySQL, PostgreSQL)'
+                    ],
+                    skills: ['Java', 'Spring Boot', 'REST APIs', 'MySQL', 'AWS', 'Git', 'Maven', 'Jenkins'],
+                    additionalRequirements: [
+                        'Strong problem-solving skills',
+                        'Excellent communication skills',
+                        'Ability to work in a team environment',
+                        'Willingness to learn new technologies'
+                    ]
+                },
+                'Python Data Scientist': {
+                    location: 'Bangalore, Karnataka',
+                    workMode: 'Office',
+                    salary: '₹70,000 - ₹100,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 20, 2024',
+                    vacancies: '2',
+                    education: [
+                        'B.Sc/M.Sc in Statistics, Mathematics, or Computer Science',
+                        'M.Tech in Data Science preferred',
+                        'PhD in relevant field is a plus'
+                    ],
+                    experience: [
+                        '2+ years of experience in data analysis',
+                        'Experience with Python and data science libraries',
+                        'Knowledge of statistical analysis and machine learning',
+                        'Experience with data visualization tools'
+                    ],
+                    skills: ['Python', 'Machine Learning', 'Data Analysis', 'SQL', 'Tableau', 'Pandas', 'NumPy', 'Scikit-learn'],
+                    additionalRequirements: [
+                        'Strong analytical and problem-solving skills',
+                        'Experience with big data technologies',
+                        'Knowledge of cloud platforms (AWS/Azure/GCP)',
+                        'Excellent presentation skills'
+                    ]
+                },
+                'Frontend Developer': {
+                    location: 'Chennai, Tamil Nadu',
+                    workMode: 'Remote',
+                    salary: '₹60,000 - ₹90,000 per month',
+                    employmentType: 'Full-time',
+                    lastDate: 'March 10, 2024',
+                    vacancies: '4',
+                    education: [
+                        'B.E/B.Tech in Computer Science or related field',
+                        'B.Sc in Computer Science or IT',
+                        'Diploma in Web Development'
+                    ],
+                    experience: [
+                        '1-3 years of frontend development experience',
+                        'Experience with modern JavaScript frameworks',
+                        'Knowledge of responsive design principles',
+                        'Experience with version control systems'
+                    ],
+                    skills: ['React', 'JavaScript', 'HTML5', 'CSS3', 'TypeScript', 'Redux', 'Webpack', 'Git'],
+                    additionalRequirements: [
+                        'Strong understanding of web standards',
+                        'Experience with UI/UX design principles',
+                        'Knowledge of performance optimization',
+                        'Ability to work independently'
+                    ]
+                }
+            };
+            
+            return jobDetailsMap[jobTitle] || jobDetailsMap['Senior Java Developer'];
+        }
+        
+        function prefillApplicationForm() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            if (user.username) {
+                document.getElementById('applicantName').value = user.username || '';
+            }
+            if (user.email) {
+                document.getElementById('applicantEmail').value = user.email || '';
+            }
+        }
+        
+        function submitApplication(jobId, jobTitle, companyName) {
+            const form = document.getElementById('applicationForm');
+            
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Collect form data
+            const applicationData = {
+                id: Date.now(),
+                jobId: jobId,
+                jobTitle: jobTitle,
+                company: companyName,
+                applicantName: document.getElementById('applicantName').value,
+                applicantEmail: document.getElementById('applicantEmail').value,
+                applicantPhone: document.getElementById('applicantPhone').value,
+                applicantLocation: document.getElementById('applicantLocation').value,
+                experience: document.getElementById('applicantExperience').value,
+                currentCompany: document.getElementById('currentCompany').value,
+                qualification: document.getElementById('qualification').value,
+                fieldOfStudy: document.getElementById('fieldOfStudy').value,
+                skills: document.getElementById('applicantSkills').value,
+                coverLetter: document.getElementById('coverLetter').value,
+                expectedSalary: document.getElementById('expectedSalary').value,
+                noticePeriod: document.getElementById('noticePeriod').value,
+                resumeFile: document.getElementById('resumeFile').files[0]?.name || '',
+                appliedDate: new Date().toISOString().split('T')[0],
+                status: 'pending',
+                userId: JSON.parse(localStorage.getItem('user') || '{}').id || 'user_' + Date.now()
+            };
+            
+            // Store application
+            const applications = JSON.parse(localStorage.getItem('jobApplications') || '[]');
+            applications.push(applicationData);
+            localStorage.setItem('jobApplications', JSON.stringify(applications));
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('applicationModal'));
+            modal.hide();
+            
+            // Show success message
+            showApplicationSuccess(jobTitle, companyName);
+            
+            // Notify company dashboard
+            setTimeout(() => {
+                showCompanyNotification(companyName, jobTitle, applicationData.applicantName);
+            }, 1000);
+        }
+        
+        function showApplicationSuccess(jobTitle, companyName) {
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            successAlert.style.zIndex = '9999';
+            successAlert.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3"></i>
+                    <div>
+                        <strong>Application Submitted Successfully!</strong><br>
+                        <small>Your application for <strong>${jobTitle}</strong> at <strong>${companyName}</strong> has been received.</small><br>
+                        <small>The company will review your application and contact you soon.</small>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-3" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.body.appendChild(successAlert);
+            
+            // Remove alert after 8 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 8000);
+        }
+        
+        function showCompanyNotification(companyName, jobTitle, applicantName) {
+            // This simulates a notification that would appear on the company dashboard
+            console.log(`Company Notification: ${companyName} received application from ${applicantName} for ${jobTitle}`);
+            
+            // In a real application, this would send a WebSocket event or push notification
+            // to the company dashboard to show the new application in real-time
+        }
+        
+        async function loadJobsByCategory(category) {
+            try {
+                console.log('Loading jobs for category:', category);
+                const response = await fetch('/api/jobs/all');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const allJobs = await response.json();
+                console.log('All jobs loaded:', allJobs.length, 'jobs');
+                
+                // Enhanced filtering with comprehensive keywords
+                const filteredJobs = allJobs.filter(job => {
+                    const title = job.title.toLowerCase();
+                    const skills = job.skills.toLowerCase();
+                    const company = job.companyName?.toLowerCase() || '';
+                    const description = job.description?.toLowerCase() || '';
+                    const categoryLower = category.toLowerCase();
+                    
+                    console.log(`Filtering job: ${job.title} for category: ${category}`);
+                    
+                    switch(categoryLower) {
+                        case 'it':
+                            const itKeywords = [
+                                'developer', 'engineer', 'java', 'python', 'javascript', 'react', 
+                                'angular', 'vue', 'node', 'spring', 'django', 'flask', 'ruby', 'php',
+                                'frontend', 'backend', 'fullstack', 'full-stack', 'devops', 'mobile',
+                                'android', 'ios', 'swift', 'kotlin', 'flutter', 'react native', 
+                                'qa', 'testing', 'selenium', 'cypress', 'test', 'automation',
+                                'software', 'programmer', 'coder', 'technical', 'system', 'database',
+                                'sql', 'nosql', 'mongodb', 'mysql', 'postgresql', 'oracle',
+                                'aws', 'azure', 'gcp', 'cloud', 'kubernetes', 'docker', 'jenkins',
+                                'git', 'github', 'bitbucket', 'agile', 'scrum', 'api', 'web',
+                                'html', 'css', 'typescript', 'nodejs', 'express', 'spring boot',
+                                'hibernate', 'jpa', 'microservices', 'architecture', 'design'
+                            ];
+                            
+                            return itKeywords.some(keyword => 
+                                title.includes(keyword) || 
+                                skills.includes(keyword) || 
+                                company.includes(keyword) ||
+                                description.includes(keyword)
+                            );
+                            
+                        case 'healthcare':
+                            const healthcareKeywords = [
+                                'doctor', 'nurse', 'medical', 'health', 'hospital', 'clinic',
+                                'pharmacist', 'pharmacy', 'medicine', 'surgery', 'patient',
+                                'diagnosis', 'treatment', 'therapist', 'psychologist', 'psychiatrist',
+                                'dentist', 'dental', 'optometrist', 'chiropractor', 'physician',
+                                'surgeon', 'anesthesiologist', 'radiologist', 'pathologist',
+                                'pediatrician', 'gynecologist', 'cardiologist', 'neurologist',
+                                'healthcare', 'health care', 'medical center', 'emergency'
+                            ];
+                            
+                            return healthcareKeywords.some(keyword => 
+                                title.includes(keyword) || 
+                                skills.includes(keyword) || 
+                                company.includes(keyword) ||
+                                description.includes(keyword)
+                            );
+                            
+                        case 'finance':
+                            const financeKeywords = [
+                                'accountant', 'accounting', 'finance', 'financial', 'analyst',
+                                'bank', 'banking', 'investment', 'invest', 'stock', 'trader',
+                                'trading', 'broker', 'wealth', 'portfolio', 'fund', 'mutual fund',
+                                'insurance', 'tax', 'taxation', 'audit', 'auditor', 'cfo',
+                                'controller', 'treasurer', 'credit', 'loan', 'mortgage', 'risk',
+                                'compliance', 'regulatory', 'fintech', 'cryptocurrency', 'bitcoin',
+                                'blockchain', 'account', 'bookkeeping', 'payroll', 'billing',
+                                'budget', 'forecasting', 'cfa', 'cpa', 'mba', 'economics'
+                            ];
+                            
+                            return financeKeywords.some(keyword => 
+                                title.includes(keyword) || 
+                                skills.includes(keyword) || 
+                                company.includes(keyword) ||
+                                description.includes(keyword)
+                            );
+                            
+                        case 'education':
+                            const educationKeywords = [
+                                'teacher', 'teaching', 'education', 'educator', 'professor',
+                                'instructor', 'trainer', 'training', 'coach', 'tutor',
+                                'school', 'college', 'university', 'academic', 'curriculum',
+                                'student', 'learning', 'course', 'lesson', 'classroom',
+                                'principal', 'dean', 'director', 'administrator', 'librarian',
+                                'counselor', 'advisor', 'mentor', 'research', 'scholarship',
+                                'degree', 'master', 'bachelor', 'phd', 'diploma', 'certification',
+                                'online', 'e-learning', 'mooc', 'coursera', 'udemy', 'khan academy'
+                            ];
+                            
+                            return educationKeywords.some(keyword => 
+                                title.includes(keyword) || 
+                                skills.includes(keyword) || 
+                                company.includes(keyword) ||
+                                description.includes(keyword)
+                            );
+                            
+                        default:
+                            return true;
+                    }
+                });
+                
+                console.log('Filtered jobs:', filteredJobs.length, 'jobs for category:', category);
+                displayFilteredJobs(filteredJobs, category);
+            } catch (error) {
+                console.error('Error filtering jobs:', error);
+                alert('Error loading jobs for category: ' + category + '\nError: ' + error.message);
+                // Show sample jobs as fallback
+                showSampleCategoryJobs(category);
+            }
+        }
+        
+        function displayFilteredJobs(jobs, category) {
+            const jobsList = document.getElementById('jobsList');
+            jobsList.innerHTML = '';
+            
+            if (jobs.length === 0) {
+                jobsList.innerHTML = `
+                    <div class="text-center py-5">
+                        <h3>No jobs found in ${category} category</h3>
+                        <p>Try searching for other categories or keywords</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Add category header
+            jobsList.innerHTML = `
+                <div class="alert alert-info mb-4">
+                    <h4><i class="fas fa-filter"></i> ${category} Jobs (${jobs.length} found)</h4>
+                    <button class="btn btn-sm btn-outline-primary" onclick="loadJobs()">
+                        <i class="fas fa-times"></i> Clear Filter
+                    </button>
+                </div>
+            `;
+            
+            // Display filtered jobs
+            jobs.forEach(job => {
+                const jobCard = createJobCard(job);
+                jobsList.innerHTML += jobCard;
+            });
+        }
+        
+        function showSampleCategoryJobs(category) {
+            const sampleJobs = {
+                'it': [
+                    {
+                        id: 1,
+                        title: "Senior Java Developer",
+                        companyName: "Tech Solutions Inc.",
+                        workLocation: "Chennai",
+                        minSalary: 80000,
+                        maxSalary: 120000,
+                        employmentType: "Full-time",
+                        vacancies: 3,
+                        workMode: "Hybrid"
+                    },
+                    {
+                        id: 2,
+                        title: "Python Data Scientist",
+                        companyName: "Data Analytics Pro",
+                        workLocation: "Bangalore",
+                        minSalary: 70000,
+                        maxSalary: 100000,
+                        employmentType: "Full-time",
+                        vacancies: 2,
+                        workMode: "Office"
+                    },
+                    {
+                        id: 3,
+                        title: "Frontend Developer",
+                        companyName: "Web Innovations Ltd",
+                        workLocation: "Chennai",
+                        minSalary: 60000,
+                        maxSalary: 90000,
+                        employmentType: "Full-time",
+                        vacancies: 4,
+                        workMode: "Remote"
+                    },
+                    {
+                        id: 4,
+                        title: "DevOps Engineer",
+                        companyName: "Cloud Systems Inc",
+                        workLocation: "Bangalore",
+                        minSalary: 75000,
+                        maxSalary: 110000,
+                        employmentType: "Full-time",
+                        vacancies: 2,
+                        workMode: "Hybrid"
+                    },
+                    {
+                        id: 5,
+                        title: "Mobile App Developer",
+                        companyName: "Mobile First Solutions",
+                        workLocation: "Hyderabad",
+                        minSalary: 65000,
+                        maxSalary: 95000,
+                        employmentType: "Full-time",
+                        vacancies: 3,
+                        workMode: "Office"
+                    },
+                    {
+                        id: 6,
+                        title: "QA Engineer",
+                        companyName: "Quality Systems Pro",
+                        workLocation: "Chennai",
+                        minSalary: 45000,
+                        maxSalary: 70000,
+                        employmentType: "Full-time",
+                        vacancies: 5,
+                        workMode: "Hybrid"
+                    }
+                ],
+                'healthcare': [
+                    {
+                        id: 7,
+                        title: "Senior Medical Officer",
+                        companyName: "City Hospital",
+                        workLocation: "Mumbai",
+                        minSalary: 90000,
+                        maxSalary: 130000,
+                        employmentType: "Full-time",
+                        vacancies: 2,
+                        workMode: "Office"
+                    },
+                    {
+                        id: 8,
+                        title: "Registered Nurse",
+                        companyName: "General Hospital",
+                        workLocation: "Delhi",
+                        minSalary: 40000,
+                        maxSalary: 60000,
+                        employmentType: "Full-time",
+                        vacancies: 8,
+                        workMode: "Office"
+                    }
+                ],
+                'finance': [
+                    {
+                        id: 9,
+                        title: "Senior Accountant",
+                        companyName: "Finance Experts Ltd",
+                        workLocation: "Mumbai",
+                        minSalary: 55000,
+                        maxSalary: 85000,
+                        employmentType: "Full-time",
+                        vacancies: 2,
+                        workMode: "Office"
+                    },
+                    {
+                        id: 10,
+                        title: "Financial Analyst",
+                        companyName: "Investment Analytics Pro",
+                        workLocation: "Delhi",
+                        minSalary: 60000,
+                        maxSalary: 90000,
+                        employmentType: "Full-time",
+                        vacancies: 3,
+                        workMode: "Hybrid"
+                    }
+                ],
+                'education': [
+                    {
+                        id: 11,
+                        title: "Senior Professor",
+                        companyName: "University College",
+                        workLocation: "Bangalore",
+                        minSalary: 70000,
+                        maxSalary: 100000,
+                        employmentType: "Full-time",
+                        vacancies: 1,
+                        workMode: "Office"
+                    },
+                    {
+                        id: 12,
+                        title: "High School Teacher",
+                        companyName: "Education Academy",
+                        workLocation: "Chennai",
+                        minSalary: 35000,
+                        maxSalary: 50000,
+                        employmentType: "Full-time",
+                        vacancies: 5,
+                        workMode: "Office"
+                    }
+                ]
+            };
+            
+            const jobs = sampleJobs[category.toLowerCase()] || [];
+            displayFilteredJobs(jobs, category);
+        }
+        
+        function viewJob(jobId) {
+            alert(`Viewing job details for job ID: ${jobId}\n\nThis would navigate to job details page.\nFor now, you can see the job information in the card.`);
+        }
+        
+        // Handle Enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchJobs();
+            }
+        });
+        
+        // Load jobs when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthState();
+            loadJobs();
+            
+            // Handle contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleContactForm();
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offset = 100; // Increased offset for fixed navbar
+                        const targetPosition = target.offsetTop - offset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Scroll spy for active navigation highlighting
+            window.addEventListener('scroll', function() {
+                let current = '';
+                const sections = document.querySelectorAll('section[id]');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 120; // Increased offset for fixed navbar
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Handle contact form submission
+        function handleContactForm() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value;
+            
+            // Show success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3';
+            successAlert.style.zIndex = '9999';
+            successAlert.innerHTML = `
+                <strong>Thank you, ${name}!</strong> Your message has been sent successfully. We'll get back to you soon.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(successAlert);
+            
+            // Reset form
+            document.getElementById('contactForm').reset();
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                successAlert.remove();
+            }, 5000);
+        }
+    </script>
+    
+    <!-- About Section -->
+    <section id="about" class="about-section section-spacing bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">About AI Resume Screening</h2>
+                    <p class="lead">Welcome to the future of recruitment! Our AI-powered resume screening system revolutionizes how companies find the perfect candidates.</p>
+                    <p>We use advanced machine learning algorithms to analyze resumes, extract key information, and provide intelligent scoring to help recruiters make informed decisions quickly.</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-robot text-primary"></i> AI-Powered Analysis</h5>
+                            <p>Advanced algorithms parse and analyze resumes with 95% accuracy.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-tachometer-alt text-success"></i> Instant Scoring</h5>
+                            <p>Get AI-generated scores for candidates in real-time.</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <h5><i class="fas fa-shield-alt text-info"></i> Secure Platform</h5>
+                            <p>Your data is protected with enterprise-grade security.</p>
+                        </div>
+                        <div class="col-md-6 mt-3">
+                            <h5><i class="fas fa-chart-line text-warning"></i> Smart Analytics</h5>
+                            <p>Detailed insights and analytics for better hiring decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Why Choose Us?</h3>
+                            <ul class="list-unstyled">
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Save 80% of recruitment time</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Reduce bias in hiring process</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Find the best candidates faster</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> Comprehensive resume analysis</li>
+                                <li class="mb-3"><i class="fas fa-check text-success me-2"></i> 24/7 customer support</li>
+                            </ul>
+                            <button class="btn btn-primary btn-lg mt-3">Get Started Today</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section section-spacing">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h2 class="text-center mb-4">Get in Touch</h2>
+                            <p class="text-center text-muted mb-4">Have questions? We'd love to hear from you!</p>
+                            
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contactName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contactEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactSubject" class="form-label">Subject</label>
+                                    <input type="text" class="form-control" id="contactSubject" placeholder="Subject" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contactMessage" class="form-label">Message</label>
+                                    <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>AI Resume Screening</h5>
+                    <p>Revolutionizing recruitment with AI technology</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2024 AI Resume Screening. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
